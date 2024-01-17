@@ -1,30 +1,44 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    phoneNumber: "",
-    message: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  const onSubmit = async (data) => {
+    try {
+      const formData = new FormData();
+      formData.append("username", data.username);
+      formData.append("email", data.email);
+      formData.append("telp", data.telp);
+      formData.append("pesan", data.pesan);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Lakukan sesuatu dengan data formulir yang dikumpulkan
-    console.log(formData);
+      console.log(data);
+
+      await axios.post("http://localhost:8080/api/contact", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log("Data add successfull");
+      reset();
+    } catch (error) {
+      console.error("Error add data: ", error);
+    }
   };
 
   return (
     <div className="container mx-auto  mt-8 flex justify-center sm:pt-32 pt-32">
-      <form className="flex flex-col w-[1214px] md:flex-row">
+      <form
+        className="flex flex-col w-[1214px] md:flex-row"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         {/* Kolom Pertama */}
         <div className="flex flex-col w-full md:w-1/2 px-4 mb-4">
           <label
@@ -34,14 +48,12 @@ const Contact = () => {
             Username
           </label>
           <input
+            {...register("username", { required: true })}
             type="text"
             id="username"
             name="username"
             placeholder="cth : Ronaldo"
-            value={formData.username}
-            onChange={handleChange}
             className="mt-1 p-2 w-full border border-gray-300 rounded"
-            required
           />
           <label
             htmlFor="email"
@@ -50,49 +62,43 @@ const Contact = () => {
             Email
           </label>
           <input
-            type="email"
+            {...register("email", { required: true })}
+            type="text"
             id="email"
             name="email"
             placeholder="cth : ronaldo@gmail.com"
-            value={formData.email}
-            onChange={handleChange}
             className="mt-1 p-2 w-full border border-gray-300 rounded"
-            required
           />
           <label
-            htmlFor="phoneNumber"
+            htmlFor="telp"
             className="block mt-4 text-sm font-medium text-gray-700"
           >
-            No Telepon
+            No Telepon / No WhatsApp
           </label>
           <input
-            type="tel"
-            id="phoneNumber"
-            name="phoneNumber"
+            {...register("telp", { required: true })}
+            type="text"
+            id="telp"
+            name="telp"
             placeholder="cth : 08xxxxxxxxxx"
-            value={formData.phoneNumber}
-            onChange={handleChange}
             className="mt-1 p-2 w-full border border-gray-300 rounded"
-            required
           />
         </div>
         {/* Kolom Kedua */}
         <div className="flex flex-col w-full md:w-1/2 px-4 mb-4 ">
           <label
-            htmlFor="message"
+            htmlFor="pesan"
             className="block text-sm font-medium text-gray-700"
           >
             Pesan
           </label>
           <textarea
-            id="message"
-            name="message"
-            value={formData.message}
+            {...register("pesan", { required: true })}
+            id="pesan"
+            name="pesan"
             placeholder="Tulis pesan Anda..."
-            onChange={handleChange}
             rows="4"
             className="mt-1 p-2 w-full border border-gray-300 rounded"
-            required
           ></textarea>
 
           {/* Tombol Kirim */}

@@ -1,34 +1,37 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useForm } from "react-hook-form";
 
-const CommentSection = () => {
-  const [error, setError] = useState(false);
+const CommentSection = ({tourismId}) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const onSubmit = async (data) => {
+    try {
+      const formData = new FormData();
+      formData.append("comment", data.comment);
+      formData.append("id_pariwisata", tourismId);
+      formData.append("tanggal", data.tanggal);
+      formData.append("name", data.name);
+      formData.append("email", data.email);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+      console.log(data);
 
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-    setError(inputValue.length === 0);
-  };
+      await axios.post("http://localhost:8080/api/comment", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Tambahkan logika untuk mengirim atau menyimpan komentar sesuai kebutuhan
-    console.log("Data yang akan dikirim:", formData);
-    // Reset formulir setelah mengirim
-    setFormData({
-      name: "",
-      email: "",
-      message: "",
-    });
+      console.log("Data add successfull");
+      reset();
+    } catch (error) {
+      console.error("Error add data: ", error);
+    }
   };
 
   return (
@@ -36,22 +39,23 @@ const CommentSection = () => {
       <h2>Silahkan tinggalkan komentar Anda :)</h2>
       <form
         className="w-full flex flex-col gap-4 sm:gap-6 mt-4"
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <div className="mt-5">
           <label
             className={`absolute transition-all duration-300 transform ${
-              error
+              errors
                 ? "-translate-y-6 text-red-500"
                 : "-translate-y-6 text-gray-500"
             }`}
             htmlFor="name"
           >
-            {error ? "Name is required" : "Name"}
+            {errors ? "Nama tidak boleh kosong" : "Name"}
           </label>
           <input
+            {...register("name", { required: true })}
             className={`w-[300px] border-b-[2px] border-[#004AAD] py-2 px-2.5 " transition-all duration-300 ${
-              error
+              errors
                 ? "border-red-500 focus:border-red-500"
                 : "border-gray-300 focus:border-blue-500"
             }`}
@@ -59,14 +63,12 @@ const CommentSection = () => {
             placeholder="cth : Emyu"
             id="name"
             name="name"
-            value={formData.name}
-            onChange={handleInputChange}
           />
         </div>
         <div className="mt-2">
           <label
             className={`absolute transition-all duration-300 transform ${
-              error
+              errors
                 ? "-translate-y-6 text-red-500"
                 : "-translate-y-6 text-gray-500"
             }`}
@@ -75,8 +77,9 @@ const CommentSection = () => {
             Email :
           </label>
           <input
+            {...register("email", { required: true })}
             className={`w-[300px] border-b-[2px] border-[#004AAD] py-2 px-2.5 " transition-all duration-300 ${
-              error
+              errors
                 ? "border-red-500 focus:border-red-500"
                 : "border-gray-300 focus:border-blue-500"
             }`}
@@ -84,18 +87,15 @@ const CommentSection = () => {
             placeholder="cth : emyugurusejarah@gmail.com"
             id="email"
             name="email"
-            value={formData.email}
-            onChange={handleInputChange}
           />
         </div>
         <div>
-          <label htmlFor="message">Message:</label>
+          <label htmlFor="comment">Komentar:</label>
           <textarea
+            {...register("comment", { required: true })}
             className="w-[540px] py-2 px-2.5 border-[1px] border-slate-400 rounded-md"
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleInputChange}
+            id="comment"
+            name="comment"
           />
         </div>
         <button

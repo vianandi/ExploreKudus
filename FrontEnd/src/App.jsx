@@ -15,6 +15,8 @@ import Admin from "./pages/admin/Adminpage";
 import TourData from "./pages/admin/TourData";
 import Home from "./pages/Home";
 import Alltourism from "./pages/Alltourism";
+import Admin_pesan from "./pages/admin/Admin_pesan";
+import NavbarAdmin from "./component/NavbarAdmin";
 
 function App() {
   return (
@@ -22,7 +24,11 @@ function App() {
       <Routes>
         <Route path="/adminlogin2" element={<AdminLogin2 />} />
         <Route path="/admin" element={<Admin />} />
-        <Route path="/admin2" element={<TourData />} />
+        <Route path="/admin2" element={<NavbarAdmin />}>
+          <Route path="/admin2/pesan" element={<Admin_pesan />} />
+          <Route path="/admin2" element={<TourData />} />
+        </Route>
+        {/* <Route path="/admin2" element={<TourData />} /> */}
         <Route
           path="/content/:id"
           element={
@@ -78,7 +84,7 @@ function App() {
           element={
             <>
               <Navbar2 />
-              <Home/>
+              <Home />
               <Footer />
             </>
           }

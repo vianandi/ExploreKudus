@@ -1,19 +1,28 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AdminLogin2 = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
       console.log(email, password);
       const response = await axios.post(
         "http://localhost:8080/api/admin/login",
-        { email, password }
+        { email, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
 
       console.log(response); // Handle success message
+
+      navigate("/admin2");
     } catch (error) {
       if (error.response && error.response.data) {
         console.error("Login failed:", error.response.data.message);
@@ -32,7 +41,13 @@ const AdminLogin2 = () => {
             alt="Explore Kudus Logo"
             className="h-[100px] " // Sesuaikan tinggi gambar sesuai kebutuhan Anda
           />
-          <form className="w-full flex flex-col gap-4 sm:gap-6 mt-4">
+          <form
+            className="w-full flex flex-col gap-4 sm:gap-6 mt-4"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleLogin();
+            }}
+          >
             <input
               className="w-full py-2 px-2.5 border-b-[1px] border-slate-400"
               type="text"
@@ -50,6 +65,7 @@ const AdminLogin2 = () => {
             <button
               className="box-border w-[100px] h-[30px] bg-[#004AAD] rounded-[3px] text-white text-xs transition"
               onClick={handleLogin}
+              disabled={!email || !password} // Disable the button when email or password is empty
             >
               Masuk
             </button>

@@ -5,11 +5,11 @@ import LogComment from "../component/LogComment";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import ImageComponent from "../component/Imagecomponent";
+import { useForm } from "react-hook-form";
 
 const Content = () => {
   const { id } = useParams();
   const [tourism, setTourism] = useState(null);
-
   useEffect(() => {
     getTourisms();
   }, []);
@@ -24,6 +24,7 @@ const Content = () => {
       // Add error handling logic here, such as setting an error state or showing an error message to the user.
     }
   };
+
 
   return (
     <>
@@ -54,25 +55,23 @@ const Content = () => {
         {/* Left Col */}
         <div className="max-w-[788px] sm:pr-[12px] mt-4">
           {/* Content 1st Col */}
-          <p className="text-justify mb-8">{tourism?.deskripsi1}</p>
-          <div className="w-[788px] flex-1 h-[241px]">
-            <div className="w-full h-full object-cover rounded-[25px]">
-              {tourism?.gambarUtama && (
-                <ImageComponent imageName={tourism?.gambarUtama} />
-              )}
-            </div>
+          <p className=" text-justify mb-8">{tourism?.deskripsi1}</p>
+          <div className="w-[788px] flex items-center justify-center">
+            {tourism?.gambarUtama && (
+              <ImageComponent imageName={tourism?.gambarUtama} />
+            )}
           </div>
-          <p className="text-justify my-8">{tourism?.deskripsi2}</p>
+          <div className=" ">
+            <p className="text-justify my-8">{tourism?.deskripsi2}</p>
+          </div>
           {/* Pict Row */}
           <div className="flex max-w-[788px]">
             <div className="max-w-[788px] sm:pr-[8px]  ">
-              <div className="w-[770px] flex-1 h-[217px]">
-                <div className="w-full h-full object-cover rounded-[25px]">
-                  <div className="w-full h-full object-cover rounded-[25px]">
-                    {tourism?.gambarPanjang && (
-                      <ImageComponent imageName={tourism?.gambarPanjang} />
-                    )}
-                  </div>
+              <div className="w-[770px] flex-1 ">
+                <div className="flex items-center justify-center">
+                  {tourism?.gambarPanjang && (
+                    <ImageComponent imageName={tourism?.gambarPanjang} />
+                  )}
                 </div>
               </div>
             </div>
@@ -115,10 +114,10 @@ const Content = () => {
         </div>
       </div>
       {/* Comment Section */}
-      <div className="flex sm:px-[120px]">
-        <div className="w-1/2 p-4">
-          <CommentSection />
-        </div>
+      <div className="flex sm:px-[120px]">    
+          <div className="w-1/2 p-4">
+            <CommentSection tourismId={{id}}/>
+          </div>        
         <div className="max-h-[350px] w-1/2 p-4 overflow-y-auto">
           <LogComment />
           <LogComment />

@@ -81,14 +81,14 @@ const Navbar = () => {
           </div>
 
           {/* Tombol Admin Login */}
-          <Link to="/adminlogin2">
+          {/* <Link to="/adminlogin2">
             <Button
               variant="filled"
               className="rounded-full w-[143px] h-[45px] bg-[#004aad] mr-5"
             >
               Admin Login
             </Button>
-          </Link>
+          </Link> */}
         </div>
 
         {/* Toggle Menu Button */}
@@ -117,7 +117,7 @@ const Navbar = () => {
             {/* Tambahan tombol login admin pada tampilan mobile */}
             <Link
               to="/adminlogin2"
-              className="block py-2 text-[#004AAD] hover:text-gray-300"
+              className="block py-2 text-[#004AAD] hover:text-red-300"
             >
               Admin Login
             </Link>

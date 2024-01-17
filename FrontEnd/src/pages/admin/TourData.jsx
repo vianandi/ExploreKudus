@@ -7,9 +7,11 @@ import ModalInputData from "../../component/ModalInputData";
 import Modal3 from "../../component/Modal3";
 import CardsAdmin from "../../component/CardsForAdmin";
 import axios from "axios";
+import LightBlueBtn from "../../component/LightBlueBtn";
+import { Button } from "@material-tailwind/react";
+import NavbarAdmin from "../../component/NavbarAdmin";
 
 const TourData = () => {
-
   const [IsShowModalAdd, setIsShowModalAdd] = useState(false);
 
   const handleOpenModal = () => {
@@ -52,58 +54,18 @@ const TourData = () => {
     <div className="flex h-screen">
       <div className="flex h-screen flex-col">
         {/* Header */}
-        <div className="fixed">
-          <div className=" w-screen h-full flex border-b-[3px] border-[#004AAD] bg-white">
-            <p className=" mb-4 text-[#004AAD] text-[30px] mt-5 ml-5 font-semibold">
-              Data Pariwisata
-            </p>
-
-            {/* <div className="flex ml-3 items-center justify-end">
-              <Dropdown />
-            </div> */}
-
-            {/* Input Search */}
-            <div className="flex ml-3 items-center ml-auto mr-9">
-              {/* Dropdown */}
-              <div className="mr-5">
-                <Dropdown />
-              </div>
-              <div className="flex border border-[#5D5A88] w-[400px] h-[40px] rounded-[20px] ">
-                <input
-                  type="text"
-                  placeholder="Cari disini"
-                  className="py-1 px-2 rounded-[20px] flex-grow"
-                />
-                <button className="text-[#5D5A88] rounded-[20px] mr-5 ml-2">
-                  Cari
-                </button>
-              </div>
-              <Link to="/adminlogin2">
-                <button
-                  type="submit"
-                  className="hover:bg-[#CD0404] border border-[#CD0404] text-[#CD0404] hover:text-white py-2 max-w-[150px] w-[100px] max-h-[40px] px-4 rounded-md ml-5"
-                >
-                  Logout
-                </button>
-              </Link>
-              <Link to="/">
-                <button
-                  type="submit"
-                  className="hover:bg-[#004AAD] border border-[#004AAD] text-[#004AAD] hover:text-white py-2 max-w-[150px] w-[100px] max-h-[40px] px-4 rounded-md ml-5"
-                >
-                  Home
-                </button>
-              </Link>
-            </div>
-          </div>
-        </div>
+        <NavbarAdmin />
         {/* Category */}
 
-        <div className="mx-3 flex flex-wrap gap-3 mt-[80px] pb-[50px]">
-          {tourism.map((tourism)=>
-            <CardsAdmin key={tourism.id} payloads={tourism} deletetourism={()=> deletetourism(tourism.id)}></CardsAdmin>
-          )}
-          
+        <div className="mx-3 flex flex-wrap gap-3 mt-[90px] pb-[50px]">
+          {tourism.map((tourism) => (
+            <CardsAdmin
+              key={tourism.id}
+              payloads={tourism}
+              deletetourism={() => deletetourism(tourism.id)}
+            ></CardsAdmin>
+          ))}
+
           {/* <CardsAdmin />
           <CardsAdmin />
           <CardsAdmin />

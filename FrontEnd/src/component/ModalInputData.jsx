@@ -1,9 +1,11 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 const ModalInputData = ({ isOpen, onClose }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedFacilities, setSelectedFacilities] = useState([]);
+  const [facilities, setFacilities] = useState([]);
 
   const handleCloseModal = () => {
     setModalIsOpen(false);
@@ -20,6 +22,21 @@ const ModalInputData = ({ isOpen, onClose }) => {
     reset,
   } = useForm();
 
+  useEffect(() => {
+    getFasilitas();
+    // console.log(selectedFacilities);
+  }, []);
+
+  const getFasilitas = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/fasilitas");
+      setFacilities(response.data);
+      // console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching attractions:", error);
+    }
+  };
+
   const onSubmit = async (data) => {
     try {
       const formData = new FormData();
@@ -32,6 +49,7 @@ const ModalInputData = ({ isOpen, onClose }) => {
       formData.append("gambarUtama", data.gambarUtama[0]);
       formData.append("gambarPanjang", data.gambarPanjang[0]);
       formData.append("category", data.category);
+      formData.append("fasilitas", selectedFacilities.join(","));
 
       console.log(data);
 
@@ -40,12 +58,30 @@ const ModalInputData = ({ isOpen, onClose }) => {
           "Content-Type": "multipart/form-data",
         },
       });
-
+      setSelectedFacilities([]);
       console.log("Data add successfull");
       reset();
     } catch (error) {
       console.error("Error add data: ", error);
     }
+  };
+
+  const handleFacilityChange = (event) => {
+    const selectedFacility = event.target.value;
+    
+    setSelectedFacilities((prevFacilities) => [
+      ...prevFacilities,
+      selectedFacility,
+    ]);
+  };
+
+
+  const handleDeleteFacility = (index) => {
+    setSelectedFacilities((prevFacilities) => {
+      const updatedFacilities = [...prevFacilities];
+      updatedFacilities.splice(index, 1);
+      return updatedFacilities;
+    });
   };
 
   return (
@@ -143,32 +179,72 @@ const ModalInputData = ({ isOpen, onClose }) => {
                         <label className="block text-sm font-medium text-gray-700">
                           Fasilitas
                         </label>
-                        <input
+                        <select
                           {...register("fasilitas")}
-                          type="text"
                           name="fasilitas"
-                          // value={formData.fasilitas}
-                          // onChange={handleInputChange}
-                          // onKeyDown={handleEnterPress}
-                          className="mt-1 p-2 border rounded-md w-full"
-                        />
+                          onChange={handleFacilityChange}
+                          // value={formData.kategori}
+                          // onChange={handleKategoriChange}
+                          className="mt-1 p-2 border rounded-md w-full text-gray-500"
+                        >
+                          <option value="">Pilih Fasilitas</option>
+                          {facilities && facilities.map(({name, id}) => (
+                            <option key={id} value={name}>{name}</option>
+                          ))}
+                          {/* <option value="Aksesibilitas Difabel">
+                            Aksesibilitas Difabel
+                          </option>
+                          <option value="Camping Ground">Camping Ground</option>
+                          <option value="Food court">Food court</option>
+                          <option value="Kafe">Kafe</option>
+                          <option value="Kantor informasi wisata">
+                            Kantor informasi wisata
+                          </option>
+                          <option value="Klinik">Klinik</option>
+                          <option value="Kolam renang">Kolam renang</option>
+                          <option value="Musholla">Musholla</option>
+                          <option value="Penginapan">Penginapan</option>
+                          <option value="Penyewaan Sepeda">
+                            Penyewaan Sepeda
+                          </option>
+                          <option value="Peta dan brosur informatif">
+                            Peta dan brosur informatif
+                          </option>
+                          <option value="Pos Keamanan Wisata">
+                            Pos Keamanan Wisata
+                          </option>
+                          <option value="Pos Pemadam Kebakaran">
+                            Pos Pemadam Kebakaran
+                          </option>
+                          <option value="Ruang konferensi">
+                            Ruang konferensi
+                          </option>
+                          <option value="Taman bermain anak">
+                            Taman bermain anak
+                          </option>
+                          <option value="Taman rekreasi">Taman rekreasi</option>
+                          <option value="Toilet dan Fasilitas Difabel">
+                            Toilet dan Fasilitas Difabel
+                          </option>
+                          <option value="Wifi">Wifi</option>  */}
+                        </select>
                       </div>
-                      {/* <ul className="mb-2">
-                        {formData.fasilitasList.map((fasilitas, index) => (
+                      <ul className="mb-2">
+                        {selectedFacilities && selectedFacilities.map((facility, index) => (
                           <li
                             key={index}
                             className="flex justify-between items-center mr-2"
                           >
-                            {fasilitas}
+                            {facility}
                             <button
                               className="text-[#CD0404]"
-                              onClick={() => handleDeleteItem(index)}
+                              onClick={() => handleDeleteFacility(index)}
                             >
                               X
                             </button>
                           </li>
                         ))}
-                      </ul> */}
+                      </ul>
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700">
                           Kategori

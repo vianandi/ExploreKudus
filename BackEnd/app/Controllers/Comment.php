@@ -48,7 +48,7 @@ class Comment extends ResourceController
         // Insert the data into the database
         $this->model->save($data);
 
-        // Respond with a success message
+        // // Respond with a success message
         $response = [
             'status' => 201, // HTTP 201 Created
             'error' => null,
@@ -57,6 +57,7 @@ class Comment extends ResourceController
             ]
         ];
         return $this->respondCreated($response);
+        
     }
 
     public function update($id = null)
@@ -85,7 +86,7 @@ class Comment extends ResourceController
             'status' => 200, // HTTP 200 OK
             'error' => null,
             'messages' => [
-                'success' => 'Koemntar sukses diupdate'
+                'success' => 'Komentar sukses diupdate'
             ]
         ];
 

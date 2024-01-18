@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
-const CommentSection = ({tourismId}) => {
+const CommentSection = ({ tourismId }) => {
+  const [tourism, setTourism] = useState({ id: 0 });
+  useEffect(() => {
+    setTourism(tourismId);
+  }, []);
   const {
     register,
     handleSubmit,
@@ -14,7 +18,7 @@ const CommentSection = ({tourismId}) => {
     try {
       const formData = new FormData();
       formData.append("comment", data.comment);
-      formData.append("id_pariwisata", tourismId);
+      formData.append("id_pariwisata", tourism?.id);
       formData.append("tanggal", data.tanggal);
       formData.append("name", data.name);
       formData.append("email", data.email);

@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class TourismModel extends Model
+class FasilitasModel extends Model
 {
-    protected $table            = 'tourism';
+    protected $table            = 'facilities';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['name','alamat', 'gambarUtama','gambarPanjang','deskripsi1','deskripsi2','deskripsi3','facilities','category'];
+    protected $allowedFields    = ['name'];
 
     // Dates
     protected $useTimestamps = true;

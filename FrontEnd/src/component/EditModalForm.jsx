@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const EditModalForm = ({ isOpen, onClose }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -24,48 +25,37 @@ const EditModalForm = ({ isOpen, onClose }) => {
     hashtagList: [],
   });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData({
+  //     ...formData,
+  //     [name]: value,
+  //   });
+  // };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setFormData({
-      ...formData,
-      gambar: file,
-    });
-  };
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   setFormData({
+  //     ...formData,
+  //     gambar: file,
+  //   });
+  // };
 
-  const handleKategoriChange = (e) => {
-    const { value } = e.target;
-    setFormData({
-      ...formData,
-      kategori: value,
-      hashtag: value === "Wisata Prioritas" ? "" : formData.hashtag,
-    });
-  };
+  // const handleKategoriChange = (e) => {
+  //   const { value } = e.target;
+  //   setFormData({
+  //     ...formData,
+  //     kategori: value,
+  //     hashtag: value === "Wisata Prioritas" ? "" : formData.hashtag,
+  //   });
+  // };
 
-  const handleEnterPress = (e) => {
-    if (e.key === "Enter" && formData.fasilitas.trim() !== "") {
-      setFormData({
-        fasilitas: "",
-        fasilitasList: [...formData.fasilitasList, formData.fasilitas],
-      });
-    }
-  };
-
-  const handleDeleteItem = (index) => {
-    const updatedList = [...formData.fasilitasList];
-    updatedList.splice(index, 1); // Menghapus elemen berdasarkan indeks
-    setFormData({
-      ...formData,
-      fasilitasList: updatedList,
-    });
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
 
   return (
     isOpen && (
@@ -90,8 +80,8 @@ const EditModalForm = ({ isOpen, onClose }) => {
                       <input
                         type="text"
                         name="namaWisata"
-                        value={formData.namaWisata}
-                        onChange={handleInputChange}
+                        // value={formData.namaWisata}
+                        // onChange={handleInputChange}
                         className="mt-1 p-2 border rounded-md w-full"
                       />
                     </div>
@@ -102,8 +92,8 @@ const EditModalForm = ({ isOpen, onClose }) => {
                       <textarea
                         type="text"
                         name="deskripsi1"
-                        value={formData.deskripsi1}
-                        onChange={handleInputChange}
+                        // value={formData.deskripsi1}
+                        // onChange={handleInputChange}
                         className="mt-1 p-2 border rounded-md w-full h-[7rem]"
                         style={{ resize: "none" }}
                       />
@@ -115,8 +105,8 @@ const EditModalForm = ({ isOpen, onClose }) => {
                       <textarea
                         type="text"
                         name="deskripsi2"
-                        value={formData.deskripsi2}
-                        onChange={handleInputChange}
+                        // value={formData.deskripsi2}
+                        // onChange={handleInputChange}
                         className="mt-1 p-2 border rounded-md w-full h-[7rem]"
                         style={{ resize: "none" }}
                       />
@@ -128,8 +118,8 @@ const EditModalForm = ({ isOpen, onClose }) => {
                       <textarea
                         type="text"
                         name="deskripsi3"
-                        value={formData.deskripsi3}
-                        onChange={handleInputChange}
+                        // value={formData.deskripsi3}
+                        // onChange={handleInputChange}
                         className="mt-1 p-2 border rounded-md w-full h-[7rem]"
                         style={{ resize: "none" }}
                       />
@@ -145,36 +135,61 @@ const EditModalForm = ({ isOpen, onClose }) => {
                       <input
                         type="text"
                         name="fasilitas"
-                        value={formData.fasilitas}
-                        onChange={handleInputChange}
-                        onKeyDown={handleEnterPress}
+                        // value={formData.fasilitas}
+                        // onChange={handleInputChange}
+                        // onKeyDown={handleEnterPress}
                         className="mt-1 p-2 border rounded-md w-full"
                       />
                     </div>
-                    <ul className="mb-2">
-                      {formData.fasilitasList.map((fasilitas, index) => (
-                        <li
-                          key={index}
-                          className="flex justify-between items-center mr-2"
-                        >
-                          {fasilitas}
-                          <button
-                            className="text-[#CD0404]"
-                            onClick={() => handleDeleteItem(index)}
-                          >
-                            X
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
+                    <select
+                      {...register("fasilitas")}
+                      name="fasilitas"
+                      // value={formData.kategori}
+                      // onChange={handleKategoriChange}
+                      className="mt-1 p-2 border rounded-md w-full"
+                    >
+                      <option value="">Pilih Fasilitas</option>
+                      <option value="Aksesibilitas Difabel">
+                        Aksesibilitas Difabel
+                      </option>
+                      <option value="Camping Ground">Camping Ground</option>
+                      <option value="Food court">Food court</option>
+                      <option value="Kafe">Kafe</option>
+                      <option value="Kantor informasi wisata">
+                        Kantor informasi wisata
+                      </option>
+                      <option value="Klinik">Klinik</option>
+                      <option value="Kolam renang">Kolam renang</option>
+                      <option value="Musholla">Musholla</option>
+                      <option value="Penginapan">Penginapan</option>
+                      <option value="Penyewaan Sepeda">Penyewaan Sepeda</option>
+                      <option value="Peta dan brosur informatif">
+                        Peta dan brosur informatif
+                      </option>
+                      <option value="Pos Keamanan Wisata">
+                        Pos Keamanan Wisata
+                      </option>
+                      <option value="Pos Pemadam Kebakaran">
+                        Pos Pemadam Kebakaran
+                      </option>
+                      <option value="Ruang konferensi">Ruang konferensi</option>
+                      <option value="Taman bermain anak">
+                        Taman bermain anak
+                      </option>
+                      <option value="Taman rekreasi">Taman rekreasi</option>
+                      <option value="Toilet dan Fasilitas Difabel">
+                        Toilet dan Fasilitas Difabel
+                      </option>
+                      <option value="Wifi">Wifi</option>
+                    </select>
                     <div className="mb-4">
                       <label className="block text-sm font-medium text-gray-700">
                         Kategori
                       </label>
                       <select
                         name="kategori"
-                        value={formData.kategori}
-                        onChange={handleKategoriChange}
+                        // value={formData.kategori}
+                        // onChange={handleKategoriChange}
                         className="mt-1 p-2 border rounded-md w-full"
                       >
                         <option value="">Pilih Kategori</option>
@@ -197,8 +212,8 @@ const EditModalForm = ({ isOpen, onClose }) => {
                         <input
                           type="text"
                           name="hashtag"
-                          value={formData.hashtag}
-                          onChange={handleInputChange}
+                          // value={formData.hashtag}
+                          // onChange={handleInputChange}
                           className="mt-1 p-2 border rounded-md w-full"
                         />
                       </div>
@@ -210,7 +225,7 @@ const EditModalForm = ({ isOpen, onClose }) => {
                       <input
                         type="file"
                         name="gambar"
-                        onChange={handleFileChange}
+                        // onChange={handleFileChange}
                         className="mt-1 p-2 border rounded-md w-full"
                       />
                     </div>
@@ -221,7 +236,7 @@ const EditModalForm = ({ isOpen, onClose }) => {
                       <input
                         type="file"
                         name="gambar"
-                        onChange={handleFileChange}
+                        // onChange={handleFileChange}
                         className="mt-1 p-2 border rounded-md w-full"
                       />
                     </div>
@@ -232,7 +247,7 @@ const EditModalForm = ({ isOpen, onClose }) => {
                       <input
                         type="file"
                         name="gambar"
-                        onChange={handleFileChange}
+                        // onChange={handleFileChange}
                         className="mt-1 p-2 border rounded-md w-full"
                       />
                     </div>
@@ -244,14 +259,14 @@ const EditModalForm = ({ isOpen, onClose }) => {
                 <button
                   className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                   type="button"
-                  onClick={(onClose )}
+                  onClick={onClose}
                 >
                   Close
                 </button>
                 <button
                   className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                   type="button"
-                  onClick={(onClose )}
+                  onClick={onClose}
                 >
                   Save Changes
                 </button>

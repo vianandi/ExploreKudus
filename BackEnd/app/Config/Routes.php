@@ -24,3 +24,6 @@ $routes->get('/api/comment', 'Comment::index');
 $routes->get('/api/comment/(:num)', 'Comment::show/$1');
 $routes->put('/api/comment/(:num)', 'Comment::update/$1');
 $routes->delete('/api/comment/(:num)', 'Comment::delete/$1');
+//Fasilitas
+// $routes->get('/api/fasilitas', 'Fasilitas::index');
+$routes->get('/api/fasilitas', 'Fasilitas::show');

@@ -10,14 +10,25 @@ import { useForm } from "react-hook-form";
 const Content = () => {
   const { id } = useParams();
   const [tourism, setTourism] = useState(null);
+  const [comment, setComment] = useState([]);
+
   useEffect(() => {
     getTourisms();
   }, []);
+  useEffect(() => {
+    getComment();
+  }, []);
+
   const getTourisms = async () => {
     try {
       const response = await axios.get(
         `http://localhost:8080/api/tourism/${id}`
       );
+      const data = response.data;
+      // If facilities is a string of facilities separated by commas, split it into an array
+      if (typeof data.facilities === "string") {
+        data.facilities = data.facilities.split(",");
+      }
       setTourism(response.data);
     } catch (error) {
       console.error("Error fetching tourism data:", error);
@@ -25,6 +36,15 @@ const Content = () => {
     }
   };
 
+  const getComment = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/comment`);
+      setComment(response.data);
+    } catch (error) {
+      console.error("Error fetching tourism data:", error);
+      // Add error handling logic here, such as setting an error state or showing an error message to the user.
+    }
+  };
 
   return (
     <>
@@ -84,7 +104,18 @@ const Content = () => {
           {/* Content 2nd Col */}
           <h3 className="font-bold text-[#004AAD]">Fasilitas</h3>
           <div className="flex gap-8">
-            <div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(1, 1fr)",
+                gap: "10px",
+              }}
+            >
+              {tourism?.facilities.map((facility, index) => (
+                <div key={index}>{facility}</div>
+              ))}
+            </div>
+            {/* <div>
               <p>Musholla</p>
               <p>Free Wi-Fi</p>
               <p>Foos Court</p>
@@ -101,7 +132,7 @@ const Content = () => {
               <p>Free Wi-Fi</p>
               <p>Foos Court</p>
               <p>Toilet</p>
-            </div>
+            </div> */}
           </div>
 
           <div className="mt-5 w-[348px]">
@@ -114,17 +145,17 @@ const Content = () => {
         </div>
       </div>
       {/* Comment Section */}
-      <div className="flex sm:px-[120px]">    
-          <div className="w-1/2 p-4">
-            <CommentSection tourismId={{id}}/>
-          </div>        
+      <div className="flex sm:px-[120px]">
+        <div className="w-1/2 p-4">
+          <CommentSection tourismId={{ id }} />
+        </div>
         <div className="max-h-[350px] w-1/2 p-4 overflow-y-auto">
-          <LogComment />
-          <LogComment />
-          <LogComment />
-          <LogComment />
-          <LogComment />
-          <LogComment />
+          <div>
+            <p className="text-2xl">Komentar</p>
+          </div>
+          {comment.map((payloads) => (
+            <LogComment payloads={payloads} key={payloads.id} />
+          ))}
         </div>
       </div>
     </>

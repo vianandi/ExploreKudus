@@ -42,7 +42,7 @@ const CardPriorityTour = ({ payloads }) => {
             {deskripsiPotong}
           </p>
         </div>
-        <div className="flex px-6 pt-4 pb-2 sm:text-lg overflow-x-auto">
+        {/* <div className="flex px-6 pt-4 pb-2 sm:text-lg overflow-x-auto">
           <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-[10px] sm:text-sm font-semibold text-gray-700 mr-2 mb-2">
             #photography
           </span>
@@ -52,7 +52,7 @@ const CardPriorityTour = ({ payloads }) => {
           <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-[10px] sm:text-sm font-semibold text-gray-700 mr-2 mb-2">
             #winter
           </span>
-        </div>
+        </div> */}
       </NavLink>
     </div>
   );

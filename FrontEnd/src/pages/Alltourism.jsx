@@ -1,8 +1,49 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import LightBlueBtn from "../component/LightBlueBtn";
 import CardsTour from "../component/CardsTour";
+import axios from "axios";
+import { set } from "react-hook-form";
 
 const Alltourism = () => {
+  const [tourism, setTourisms] = useState([]);
+  const [dataTourism, setDataTourisms] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  useEffect(() => {
+    getTourisms();
+  }, [selectedCategory]);
+
+  const getTourisms = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/tourism");
+      setTourisms(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching attractions:", error);
+    }
+  };
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+    console.log(selectedCategory);
+  };
+
+  useEffect(() => {
+    // console.log(selectedCategory)
+    // console.log(tourism)
+    filteredTourism()
+  }, [selectedCategory, tourism]);
+
+  const filteredTourism = async () => {
+    if (selectedCategory !== null) {
+      const dataTour = tourism.filter((tour) => tour.category_id == selectedCategory);
+      console.log(dataTour)
+      setDataTourisms(dataTour);
+    } else {
+      setDataTourisms(tourism);
+    }
+  }
+
   return (
     <>
       {/* Category */}
@@ -17,37 +58,42 @@ const Alltourism = () => {
         <div className="flex gap-2">
           <div className="p-2">
             <LightBlueBtn
-              path="/"
+              // path="/tourism"
               text="WISATA ALAM"
               width={"w-[400px] sm:w-1/3"}
+              action={() => handleCategoryClick(2)}
             />
           </div>
           <div className="p-2 ">
             <LightBlueBtn
-              path="/"
+              path="/tourism"
               text="WISATA BELANJA"
               width={"w-full sm:w-1/3"}
+              action={() => handleCategoryClick(3)}
             />
           </div>
           <div className="p-2">
             <LightBlueBtn
-              path="/"
+              path="/tourism"
               text="WISATA KULINER"
               width={"w-full sm:w-1/3"}
+              action={() => handleCategoryClick(4)}
             />
           </div>
           <div className=" p-2">
             <LightBlueBtn
-              path="/"
+              path="/tourism"
               text="WISATA RELIGI"
               width={"w-full sm:w-1/3"}
+              action={() => handleCategoryClick(5)}
             />
           </div>
           <div className=" p-2">
             <LightBlueBtn
-              path="/"
+              path="/tourism"
               text="WISATA SEJARAH"
               width={"w-full sm:w-1/3"}
+              action={() => handleCategoryClick(6)}
             />
           </div>
         </div>
@@ -56,7 +102,20 @@ const Alltourism = () => {
       <div className="container mx-auto mb-2 mt-8 sm:px-[120px] px-[5px]">
         <div className="flex flex-wrap mx-4">
           {/* Baris Pertama */}
-          <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 px-5 sm:px-[20px] sm:pt-10 sm:pb-10">
+            {dataTourism?.map((tourism) => (
+              tourism && <CardsTour key={tourism.id} payloads={tourism}></CardsTour>
+            ))}
+          </div>
+          {/* <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
+            {tourism.map((tourism) => (
+              <CardsTour
+                key={tourism.id}
+                payloads={tourism}
+              ></CardsTour>
+            ))}
+          </div> */}
+          {/* <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
             <CardsTour />
           </div>
           <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
@@ -79,7 +138,7 @@ const Alltourism = () => {
           </div>
           <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
             <CardsTour />
-          </div>
+          </div> */}
         </div>
       </div>
     </>

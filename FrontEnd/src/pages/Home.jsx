@@ -120,31 +120,13 @@ const Home = () => {
       <div className="container mx-auto mb-2 mt-8 sm:px-[120px] px-[5px]">
         <div className="flex flex-wrap mx-4">
           {/* Baris Pertama */}
-          <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4 ">
-            <CardsTour />
-          </div>
-          <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
-            <CardsTour />
-          </div>
-          <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
-            <CardsTour />
-          </div>
-          <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
-            <CardsTour />
-          </div>
-
-          {/* Baris Kedua */}
-          <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
-            <CardsTour />
-          </div>
-          <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
-            <CardsTour />
-          </div>
-          <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
-            <CardsTour />
-          </div>
-          <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
-            <CardsTour />
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 px-5 sm:px-[20px] sm:pt-10 sm:pb-10">
+            {tourism.map(
+              (tourism) =>
+                tourism && (
+                  <CardsTour key={tourism.id} payloads={tourism}></CardsTour>
+                )
+            )}
           </div>
         </div>
       </div>

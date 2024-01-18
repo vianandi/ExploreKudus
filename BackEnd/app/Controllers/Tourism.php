@@ -56,7 +56,7 @@ class Tourism extends ResourceController
                 'deskripsi2' => $this->request->getVar('deskripsi2'),
                 'deskripsi3' => $this->request->getVar('deskripsi3'),
                 'facilities' => $this->request->getVar('fasilitas'), 
-                'category' => $this->request->getVar('category'),
+                'category_id' => $this->request->getVar('category_id'),
                 'gambarUtama' => $newName,
                 'gambarPanjang' => $newName1,
             ];
@@ -142,16 +142,21 @@ class Tourism extends ResourceController
         if ($data) {
             // Get the filename of the thumbnail
             $gambarUtamaFilename = $data['gambarUtama'];
+            $gambarPanjangFilename = $data['gambarPanjang'];
 
             // Delete the attraction from the database
             $this->model->delete($id);
 
-            // Construct the path to the thumbnail file
-            $gambarUtamaPath = FCPATH . 'uploads' . DIRECTORY_SEPARATOR . $gambarUtamaFilename;
+            // Construct the path to the picture file
+            $gambarUtamaPath = FCPATH . 'uploads/' . $gambarUtamaFilename;
+            $gambarPanjangPath = FCPATH . 'uploads/' . $gambarPanjangFilename;
 
             // Check if the file exists and delete it
             if (file_exists($gambarUtamaPath) && is_file($gambarUtamaPath)) {
                 unlink($gambarUtamaPath);
+            }
+            if (file_exists($gambarPanjangPath) && is_file($gambarPanjangPath)) {
+                unlink($gambarPanjangPath);
             }
 
             // Respond with a success message

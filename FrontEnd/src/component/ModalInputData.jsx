@@ -6,6 +6,7 @@ const ModalInputData = ({ isOpen, onClose }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedFacilities, setSelectedFacilities] = useState([]);
   const [facilities, setFacilities] = useState([]);
+  const [category, setCategory] = useState([]);
 
   const handleCloseModal = () => {
     setModalIsOpen(false);
@@ -26,11 +27,25 @@ const ModalInputData = ({ isOpen, onClose }) => {
     getFasilitas();
     // console.log(selectedFacilities);
   }, []);
+  useEffect(() => {
+    getCategory();
+    // console.log(selectedFacilities);
+  }, []);
 
   const getFasilitas = async () => {
     try {
       const response = await axios.get("http://localhost:8080/api/fasilitas");
       setFacilities(response.data);
+      // console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching attractions:", error);
+    }
+  };
+
+  const getCategory = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/category");
+      setCategory(response.data);
       // console.log(response.data);
     } catch (error) {
       console.error("Error fetching attractions:", error);
@@ -48,10 +63,11 @@ const ModalInputData = ({ isOpen, onClose }) => {
       formData.append("deskripsi3", data.deskripsi3);
       formData.append("gambarUtama", data.gambarUtama[0]);
       formData.append("gambarPanjang", data.gambarPanjang[0]);
-      formData.append("category", data.category);
+      formData.append("category_id", data.category);
       formData.append("fasilitas", selectedFacilities.join(","));
 
       console.log(data);
+      console.log(data.category);
 
       await axios.post("http://localhost:8080/api/tourism", formData, {
         headers: {
@@ -257,15 +273,9 @@ const ModalInputData = ({ isOpen, onClose }) => {
                           className="mt-1 p-2 border rounded-md w-full"
                         >
                           <option value="">Pilih Kategori</option>
-                          <option value="Wisata Prioritas">
-                            Wisata Prioritas
-                          </option>
-                          <option value="Wisata Alam">Wisata Alam</option>
-                          <option value="Wisata Belanja">Wisata Belanja</option>
-                          <option value="Wisata Kuliner">Wisata Kuliner</option>
-                          <option value="Wisata Religi">Wisata Religi</option>
-                          <option value="Wisata Sejarah">Wisata Sejarah</option>
-                          {/* Tambahkan opsi kategori lainnya disini */}
+                          {category && category.map(({name, id}) => (
+                            <option key={id} value={id}>{name}</option>
+                          ))}
                         </select>
                       </div>
                       {/* {formData.kategori === "Wisata Prioritas" && (

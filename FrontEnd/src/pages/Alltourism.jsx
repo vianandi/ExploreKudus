@@ -2,12 +2,21 @@ import React, { useState, useEffect } from "react";
 import LightBlueBtn from "../component/LightBlueBtn";
 import CardsTour from "../component/CardsTour";
 import axios from "axios";
-import { set } from "react-hook-form";
+import { useLocation } from "react-router-dom";
 
 const Alltourism = () => {
   const [tourism, setTourisms] = useState([]);
   const [dataTourism, setDataTourisms] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const searchTerm = searchParams.get("search");
+
+  const filteredData = dataTourism.filter((tourism) =>
+    searchTerm
+      ? tourism.name.toLowerCase().includes(searchTerm.toLowerCase())
+      : true
+  );
 
   useEffect(() => {
     getTourisms();
@@ -17,6 +26,7 @@ const Alltourism = () => {
     try {
       const response = await axios.get("http://localhost:8080/api/tourism");
       setTourisms(response.data);
+      setDataTourisms(response.data);
       console.log(response.data);
     } catch (error) {
       console.error("Error fetching attractions:", error);
@@ -31,18 +41,20 @@ const Alltourism = () => {
   useEffect(() => {
     // console.log(selectedCategory)
     // console.log(tourism)
-    filteredTourism()
+    filteredTourism();
   }, [selectedCategory, tourism]);
 
   const filteredTourism = async () => {
     if (selectedCategory !== null) {
-      const dataTour = tourism.filter((tour) => tour.category_id == selectedCategory);
-      console.log(dataTour)
+      const dataTour = tourism.filter(
+        (tour) => tour.category_id == selectedCategory
+      );
+      console.log(dataTour);
       setDataTourisms(dataTour);
     } else {
       setDataTourisms(tourism);
     }
-  }
+  };
 
   return (
     <>
@@ -103,42 +115,13 @@ const Alltourism = () => {
         <div className="flex flex-wrap mx-4">
           {/* Baris Pertama */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 px-5 sm:px-[20px] sm:pt-10 sm:pb-10">
-            {dataTourism?.map((tourism) => (
-              tourism && <CardsTour key={tourism.id} payloads={tourism}></CardsTour>
-            ))}
+            {filteredData?.map(
+              (tourism) =>
+                tourism && (
+                  <CardsTour key={tourism.id} payloads={tourism}></CardsTour>
+                )
+            )}
           </div>
-          {/* <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
-            {tourism.map((tourism) => (
-              <CardsTour
-                key={tourism.id}
-                payloads={tourism}
-              ></CardsTour>
-            ))}
-          </div> */}
-          {/* <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
-            <CardsTour />
-          </div>
-          <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
-            <CardsTour />
-          </div>
-          <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
-            <CardsTour />
-          </div>
-          <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
-            <CardsTour />
-          </div>
-          <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
-            <CardsTour />
-          </div>
-          <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
-            <CardsTour />
-          </div>
-          <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
-            <CardsTour />
-          </div>
-          <div className="w-full sm:w-1/2 md:w-1/4 px-4 mb-4">
-            <CardsTour />
-          </div> */}
         </div>
       </div>
     </>

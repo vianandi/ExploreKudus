@@ -1,8 +1,20 @@
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../component/AuthContext";
 import { Button } from "@material-tailwind/react";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
 
 const About = () => {
+  const navigate = useNavigate();
+  const { isLoggedIn } = useContext(AuthContext);
+
+  const handleDashboardClick = () => {
+    if (isLoggedIn) {
+      navigate("/admin2/tourdata");
+    } else {
+      navigate("/adminlogin2");
+    }
+  };
+
   return (
     <>
       {/* Title */}
@@ -57,14 +69,13 @@ const About = () => {
             menciptakan kenangan tak terlupakan di destinasi yang mempesona ini.
             Selamat menikmati petualangan Anda di "Explore Kudus"!
           </p>
-          <Link to="/adminlogin2">
             <Button
               variant="filled"
               className="rounded-3 w-[143px] h-[45px] bg-[#004aad] mt-5"
+              onClick={handleDashboardClick}
             >
               Dashboard
             </Button>
-          </Link>
         </div>
         {/* Kolom Kedua */}
         <div className="w-1/2 p-4">

@@ -5,19 +5,56 @@ import LogComment from "../component/LogComment";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import ImageComponent from "../component/Imagecomponent";
-import { useForm } from "react-hook-form";
+// import { set } from "react-hook-form";
+import moment from "moment/moment";
 
 const Content = () => {
   const { id } = useParams();
   const [tourism, setTourism] = useState(null);
+  const [tourisms, setTourisms] = useState([]);
   const [comment, setComment] = useState([]);
+  const [filteredComments, setFilteredComments] = useState([]);
+  const formatDate = moment(tourism?.created_at).format("DD MMMM YYYY");
+  const [currentCategoryId, setCurrentCategoryId] = useState(null);
+  const [displayedCardId, setDisplayedCardId] = useState(null);
 
   useEffect(() => {
-    getTourisms();
-  }, []);
+    const fetchData = async () => {
+      await getTourisms();
+      await getComment();
+    };
+
+    fetchData();
+  }, [id]);
+  // useEffect(() => {
+  //   const filteredComments = comment.filter(
+
   useEffect(() => {
-    getComment();
+    const fetchTourisms = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/api/tourism");
+        setTourisms(response.data);
+      } catch (error) {
+        console.error("Error fetching tourisms:", error);
+      }
+    };
+
+    fetchTourisms();
   }, []);
+
+  useEffect(() => {
+    if (tourism !== null) {
+      const dataComment = comment.filter((com) => com.tourismId == tourism.id);
+      console.log(dataComment);
+      setFilteredComments(dataComment);
+    } else {
+      setFilteredComments([]);
+    }
+  }, [comment, tourism]);
+
+  const handleContentCalled = (categoryId) => {
+    setCurrentCategoryId(categoryId);
+  };
 
   const getTourisms = async () => {
     try {
@@ -30,6 +67,9 @@ const Content = () => {
         data.facilities = data.facilities.split(",");
       }
       setTourism(response.data);
+      handleContentCalled(response.data.category_id); // Update the currentCategoryId
+      setDisplayedCardId(id); // Update the displayedCardId
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching tourism data:", error);
       // Add error handling logic here, such as setting an error state or showing an error message to the user.
@@ -40,11 +80,47 @@ const Content = () => {
     try {
       const response = await axios.get(`http://localhost:8080/api/comment`);
       setComment(response.data);
+      console.log(response.data);
     } catch (error) {
-      console.error("Error fetching tourism data:", error);
-      // Add error handling logic here, such as setting an error state or showing an error message to the user.
+      console.error("Error fetching comment data:", error);
     }
   };
+
+  if (tourism === null) {
+    return <p>Loading...</p>;
+  }
+
+  function shuffle(array) {
+    var currentIndex = array.length,
+      temporaryValue,
+      randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  }
+
+  // const filteredComments = async () => {
+  //   if (selectedComment !== null) {
+  //     const dataComment = comment.filter(
+  //       (com) => com.tourismId == selectedComment
+  //     );
+  //     console.log(dataComment);
+  //     setSelectedComment(dataComment);
+  //   } else {
+  //     setSelectedComment(comment);
+  //   }
+  // };
 
   return (
     <>
@@ -66,7 +142,7 @@ const Content = () => {
       <div className="flex flex-col items-start sm:px-[120px]">
         <div className="flex mt-[-8px]">
           <div className="  mr-4 text-[12px] text-[#004AAD] md:text-[14px] font-semibold">
-            12 November 2023
+            {formatDate}
           </div>
         </div>
       </div>
@@ -103,7 +179,7 @@ const Content = () => {
         <div className="max-w-[348px] ml-12 sm:pl-[12px] mt-4">
           {/* Content 2nd Col */}
           <h3 className="font-bold text-[#004AAD]">Fasilitas</h3>
-          <div className="flex gap-8">
+          <div className="flex gap-8 mt-5">
             <div
               style={{
                 display: "grid",
@@ -115,30 +191,15 @@ const Content = () => {
                 <div key={index}>{facility}</div>
               ))}
             </div>
-            {/* <div>
-              <p>Musholla</p>
-              <p>Free Wi-Fi</p>
-              <p>Foos Court</p>
-              <p>Toilet</p>
-            </div>
-            <div>
-              <p>Musholla</p>
-              <p>Free Wi-Fi</p>
-              <p>Foos Court</p>
-              <p>Toilet</p>
-            </div>
-            <div>
-              <p>Musholla</p>
-              <p>Free Wi-Fi</p>
-              <p>Foos Court</p>
-              <p>Toilet</p>
-            </div> */}
           </div>
 
           <div className="mt-5 w-[348px]">
-            <LeftCards />
-            <LeftCards />
-            <LeftCards />
+            {shuffle([...tourisms]) // Shuffle the array
+              .filter((tour) => tour.id !== displayedCardId)
+              .slice(0, 3)
+              .map((tour) => (
+                <LeftCards key={tour.id} payloads={tour} />
+              ))}
           </div>
 
           {/* ... Your content for the second column goes here ... */}
@@ -153,6 +214,14 @@ const Content = () => {
           <div>
             <p className="text-2xl">Komentar</p>
           </div>
+          {/* {filteredComments?.map(
+            (comment) =>
+              comment && <LogComment payloads={comment} key={comment.id} />
+          )} */}
+          {/* {filteredComments?.map(
+            (comment) =>
+              comment && <LogComment payloads={comment} key={comment.id} />
+          )} */}
           {comment.map((payloads) => (
             <LogComment payloads={payloads} key={payloads.id} />
           ))}

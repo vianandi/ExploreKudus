@@ -1,7 +1,9 @@
 import React from "react";
+import moment from "moment/moment";
 
 const LogComment = ({ payloads }) => {
   const { id, name, comment,tanggal, created_at } = payloads;
+  const formatDate = moment(created_at).format("DD MMMM YYYY");
   return (
     <div className="flex">
       {/* Kolom 1 */}
@@ -12,7 +14,7 @@ const LogComment = ({ payloads }) => {
 
       {/* Kolom 2 */}
       <div className="text-[14px] w-1/2 p-4">
-        <p>{created_at}</p>
+        <p>{formatDate}</p>
       </div>
     </div>
   );

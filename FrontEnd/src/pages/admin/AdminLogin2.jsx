@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import AuthContext from "../../component/AuthContext";
+import { Button } from "@material-tailwind/react";
 
 const AdminLogin2 = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { setIsLoggedIn, setToken } = useContext(AuthContext);
 
   const handleLogin = async () => {
     try {
-      console.log(email, password);
       const response = await axios.post(
         "http://localhost:8080/api/admin/login",
         { email, password },
@@ -20,9 +22,14 @@ const AdminLogin2 = () => {
         }
       );
 
-      console.log(response); // Handle success message
+      setIsLoggedIn(true);
+      setToken(response.data.token); // Assuming the token is in the response data
 
-      navigate("/admin2");
+      // Save the token in localStorage
+      localStorage.setItem("token", response.data.token);
+      console.log(response.data.token);
+
+      navigate("/admin2/tourdata");
     } catch (error) {
       if (error.response && error.response.data) {
         console.error("Login failed:", error.response.data.message);
@@ -61,14 +68,21 @@ const AdminLogin2 = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </form>
-          <div className="w-full justify-end flex">
-            <button
-              className="box-border w-[100px] h-[30px] bg-[#004AAD] rounded-[3px] text-white text-xs transition"
-              onClick={handleLogin}
-              disabled={!email || !password} // Disable the button when email or password is empty
-            >
-              Masuk
-            </button>
+          <div className="flex justify-between w-full">
+            <div className="flex items-center">
+              <Link to="/">
+                <p className="text-[#004AAD] cursor-pointer">Kembali</p>
+              </Link>
+            </div>
+            <div className="flex items-center">
+              <Button
+                className="flex items-center text-center box-border w-[100px] h-[30px] bg-[#004AAD] rounded-[3px] text-white text-xs transition"
+                onClick={handleLogin}
+                disabled={!email || !password}
+              >
+                Masuk
+              </Button>
+            </div>
           </div>
         </div>
       </div>

@@ -1,5 +1,7 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import ImageComponent from "../component/Imagecomponent";
+import axios from "axios";
 
 const CardPriorityTour = ({ payloads }) => {
   const {
@@ -14,7 +16,7 @@ const CardPriorityTour = ({ payloads }) => {
     category,
   } = payloads;
 
-  // Fungsi untuk memotong deskripsi menjadi maksimal 10 kata dan menambahkan "..."
+  // Fungsi untuk memotong deskripsi menjadi maksimal beberapa kata dan menambahkan "..."
   const potongDeskripsi = (deskripsi, jumlahKata) => {
     const kata = deskripsi.split(" ");
     const deskripsiPotong = kata.slice(0, jumlahKata).join(" ");
@@ -26,11 +28,9 @@ const CardPriorityTour = ({ payloads }) => {
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg rounded-[20px]">
       <NavLink to={`/content/${id}`}>
-        <img
-          className="w-full rounded-[10px]"
-          src="https://res.cloudinary.com/dbmiqiqf4/image/upload/v1700743741/unsplash_VowIFDxogG4_liyxvu.png"
-          alt="Sunset in the mountains"
-        />
+        <div className="w-full rounded-[10px]" alt="Sunset in the mountains">
+          {gambarUtama && <ImageComponent imageName={gambarUtama} />}
+        </div>
         <div className="px-2 py-4">
           <div className="font-bold text-[14px]  text-center mb-2 sm:text-lg">
             {name}

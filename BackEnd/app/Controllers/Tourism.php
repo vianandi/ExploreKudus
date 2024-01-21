@@ -80,57 +80,53 @@ class Tourism extends ResourceController
     }
     
     public function update($id = null)
-    {
-        // Validation code can be added here
+{
+    // Validation code can be added here
 
-        // Get the uploaded thumbnail
-        $gambarUtama = $this->request->getFile('gambarUtama');
+    // Get the uploaded thumbnail
+    $gambarUtama = $this->request->getFile('gambarUtama');
+    $gambarPanjang = $this->request->getFile('gambarPanjang');
 
-        // Check if a file has been uploaded
-        if ($gambarUtama->isValid() && !$gambarUtama->hasMoved()) {
-            // Generate a random name and move the thumbnail to the uploads directory
-            $newName = $gambarUtama->getRandomName();
-            $gambarUtama->move('./uploads', $newName);
+    // Check if a file has been uploaded
+    if ($gambarUtama->isValid() && !$gambarUtama->hasMoved() && $gambarPanjang->isValid() && !$gambarPanjang->hasMoved()) {
+        // Generate random names and move the thumbnails to the uploads directory
+        $newName = $gambarUtama->getRandomName();
+        $newName1 = $gambarPanjang->getRandomName();
+        $gambarUtama->move('./uploads', $newName);
+        $gambarPanjang->move('./uploads', $newName1);
 
-            // Prepare data for updating
-            $data = [
-                'name' => $this->request->getVar('name'),
-                'alamat' => $this->request->getVar('alamat'),
-                'deskripsi1' => $this->request->getVar('deskripsi1'),
-                'deskripsi2' => $this->request->getVar('deskripsi2'),
-                'deskripsi3' => $this->request->getVar('deskripsi3'),
-                'facilities' => $this->request->getVar('fasilitas'), 
-                'category' => $this->request->getVar('category'),
-                'gambarUtama' => $this->request->getVar('gambarUtama'),
-                'gambarPanjang' => $this->request->getVar('gambarPanjang'),
-            ];
+        // Prepare data for updating
+        $data = [
+            'name' => $this->request->getVar('name'),
+            'alamat' => $this->request->getVar('alamat'),
+            'deskripsi1' => $this->request->getVar('deskripsi1'),
+            'deskripsi2' => $this->request->getVar('deskripsi2'),
+            'deskripsi3' => $this->request->getVar('deskripsi3'),
+            'facilities' => $this->request->getVar('fasilitas'),
+            'category_id' => $this->request->getVar('category_id'),
+            'gambarUtama' => $newName, // Update with new file name
+            'gambarPanjang' => $newName1, // Update with new file name
+        ];
 
-            // Update the data in the database
-            $this->model->update($id, $data);
+        // Update the data in the database
+        $this->model->update($id, $data);
 
-            // Respond with a success message
-            $response = [
-                'status' => 200, // HTTP 200 OK
-                'error' => null,
-                'messages' => [
-                    'success' => 'Attraction data updated successfully'
-                ]
-            ];
+        // Respond with a success message
+        $response = [
+            'status' => 200, // HTTP 200 OK
+            'error' => null,
+            'messages' => [
+                'success' => 'Attraction data updated successfully'
+            ]
+        ];
 
-            return $this->respond($response);
-        } else {
-            // Respond with a generic validation error message
-            $response = [
-                'status' => 400, // HTTP 400 Bad Request (or another appropriate error code)
-                'error' => 'Validation error',
-                'messages' => [
-                    'error' => 'Please check your input.'
-                ]
-            ];
-
-            return $this->respond($response);
-        }
+        return $this->respond($response);
+    } else {
+        // Respond with a validation error if thumbnails are not valid
+        return $this->failValidationError('Invalid thumbnails');
     }
+}
+
 
 
 

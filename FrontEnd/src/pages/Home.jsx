@@ -9,13 +9,19 @@ import CardCulinaryLong from "../component/CardCulinaryLong";
 import CulinaryBtn from "../component/CulinaryBtn";
 import CardsTour from "../component/CardsTour";
 import axios from "axios";
+import CardCulinaryBig from "../component/CardCulinaryBig";
 
 const Home = () => {
   const [tourism, setTourisms] = useState([]);
+  const [filteredComments, setFilteredComments] = useState([]);
+  const shuffledTourism = shuffle([...tourism])
+    .filter((tour) => tour.category_id === "4")
+    .slice(0, 3);
 
   useEffect(() => {
     getTourisms();
   }, []);
+
   const getTourisms = async () => {
     try {
       const response = await axios.get("http://localhost:8080/api/tourism");
@@ -24,11 +30,35 @@ const Home = () => {
       console.error("Error fetching attractions:", error);
     }
   };
+
+  if (tourism === null) {
+    return <p>Loading...</p>;
+  }
+
+  function shuffle(array) {
+    var currentIndex = array.length,
+      temporaryValue,
+      randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  }
   return (
     <>
       {/*  pt-24  */}
 
-      <div className="w-full px-5 sm:px-[120px] sm:pt-32 pt-32 sm:pb-4">
+      <div className="w-full px-5 sm:px-[120px] sm:pt-32 pt-32 sm:pb-4 sm:overflow-x-hidden">
         <HeroSection />
       </div>
       {/* Priority Tour */}
@@ -44,12 +74,14 @@ const Home = () => {
       </div>
       {/* Cards Priority Tour */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 w-full px-5 sm:px-[120px] sm:pt-10 sm:pb-10">
-        {tourism.map((tourism) => (
-          <CardPriorityTour
-            key={tourism.id}
-            payloads={tourism}
-          ></CardPriorityTour>
-        ))}
+        {tourism
+          .filter((tour) => tour.category_id === "1")
+          .map((tourism) => (
+            <CardPriorityTour
+              key={tourism.id}
+              payloads={tourism}
+            ></CardPriorityTour>
+          ))}
       </div>
       {/* Culinary Tour */}
       <div className="flex flex-col items-center">
@@ -63,36 +95,29 @@ const Home = () => {
         </div>
       </div>
       {/* Cards Culinary Tour */}
-      <div className="flex w-full sm:px-[120px]">
+      <div className="flex flex-col sm:flex-row w-full px-5 sm:px-[120px] rounded-[20px] h-auto sm:h-[555px] mb-5">
         {/* Kolom 1 */}
-        <div className="flex flex-col gap-4 px-5 sm:pt-10 pb-10 sm:pb-5 ">
-          <CardCulinaryLong />
-          <CardCulinaryLong />
+        <div className="flex flex-col gap-4 pb-10 pt-10 sm:pt-0 sm:pb-5 w-full sm:w-1/2 rounded-[20px]">
+          {shuffledTourism
+            .slice(0, Math.ceil(shuffledTourism.length / 2)) // take the first half of the array
+            .map((tourism) => (
+              <CardCulinaryLong
+                key={tourism.id}
+                payloads={tourism}
+              ></CardCulinaryLong>
+            ))}
         </div>
 
         {/* Kolom 2 */}
-        <div className="flex -z-10 flex-col w-1/2 sm:pt-10">
-          <Link to="/content">
-            <div className="relative w-[600px] h-[552px] lg:flex">
-              <img
-                className="w-full h-full object-cover rounded-[20px]"
-                src="https://res.cloudinary.com/dbmiqiqf4/image/upload/v1700743741/unsplash_VowIFDxogG4_liyxvu.png"
-                alt="Sunset in the mountains"
-              />
-              <div className="rounded-[20px] absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 text-white p-4 flex flex-col justify-between leading-normal">
-                <div className="mb-8">
-                  <div className="text-white font-bold text-xl mb-2">
-                    Can coffee make you a better developer?
-                  </div>
-                  <p className="text-gray-300 text-base">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Voluptatibus quia, nulla! Maiores et perferendis eaque,
-                    exercitationem praesentium nihil.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Link>
+        <div className="flex flex-col gap-4 pb-10 pt-10 sm:pt-0 sm:pb-5 w-full sm:w-1/2 rounded-[20px]">
+          {shuffledTourism
+            .slice(Math.ceil(shuffledTourism.length / 3)) // take the second half of the array
+            .map((tourism) => (
+              <CardCulinaryLong
+                key={tourism.id}
+                payloads={tourism}
+              ></CardCulinaryLong>
+            ))}
         </div>
       </div>
       {/* Culinary Button */}
@@ -121,12 +146,14 @@ const Home = () => {
         <div className="flex flex-wrap mx-4">
           {/* Baris Pertama */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 px-5 sm:px-[20px] sm:pt-10 sm:pb-10">
-            {tourism.map(
-              (tourism) =>
-                tourism && (
-                  <CardsTour key={tourism.id} payloads={tourism}></CardsTour>
-                )
-            )}
+            {shuffle([...tourism])
+              .slice(0, 8)
+              .map(
+                (tourism) =>
+                  tourism && (
+                    <CardsTour key={tourism.id} payloads={tourism}></CardsTour>
+                  )
+              )}
           </div>
         </div>
       </div>

@@ -7,12 +7,23 @@ import ModalInputData from "../../component/ModalInputData";
 import Modal3 from "../../component/Modal3";
 import CardsAdmin from "../../component/CardsForAdmin";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 import LightBlueBtn from "../../component/LightBlueBtn";
 import { Button } from "@material-tailwind/react";
 import NavbarAdmin from "../../component/NavbarAdmin";
 
 const TourData = () => {
   const [IsShowModalAdd, setIsShowModalAdd] = useState(false);
+  const [dataTourism, setDataTourisms] = useState([]);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const searchTerm = searchParams.get("search");
+
+  const filteredData = dataTourism.filter((tourism) =>
+    searchTerm
+      ? tourism.name.toLowerCase().includes(searchTerm.toLowerCase())
+      : true
+  );
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -32,6 +43,7 @@ const TourData = () => {
     try {
       const response = await axios.get("http://localhost:8080/api/tourism");
       setTourisms(response.data);
+      setDataTourisms(response.data);
     } catch (error) {
       console.error("Error fetching attractions:", error);
     }
@@ -54,37 +66,22 @@ const TourData = () => {
     <div className="flex h-screen">
       <div className="flex h-screen flex-col">
         {/* Header */}
-        <NavbarAdmin />
+        {/* <NavbarAdmin /> */}
         {/* Category */}
 
-        <div className="mx-3 flex flex-wrap gap-3 mt-[90px] pb-[50px]">
-          {tourism.map((tourism) => (
-            <CardsAdmin
-              key={tourism.id}
-              payloads={tourism}
-              deletetourism={() => deletetourism(tourism.id)}
-            ></CardsAdmin>
-          ))}
+        <div className="mx-3 flex flex-wrap gap-3  pb-[50px]">
+          {filteredData?.map(
+            (tourism) =>
+              tourism && (
+                <CardsAdmin
+                  key={tourism.id}
+                  payloads={tourism}
+                  deletetourism={() => deletetourism(tourism.id)}
+                ></CardsAdmin>
+              )
+          )}
 
           {/* <CardsAdmin />
-          <CardsAdmin />
-          <CardsAdmin />
-          <CardsAdmin />
-          <CardsAdmin />
-          <CardsAdmin />
-          <CardsAdmin />
-          <CardsAdmin />
-          <CardsAdmin />
-          <CardsAdmin />
-          <CardsAdmin />
-          <CardsAdmin />
-          <CardsAdmin />
-          <CardsAdmin />
-          <CardsAdmin />
-          <CardsAdmin />
-          <CardsAdmin />
-          <CardsAdmin />
-          <CardsAdmin />
           <CardsAdmin />
           <CardsAdmin />
           <CardsAdmin />
@@ -116,23 +113,7 @@ const TourData = () => {
             }}
           />
         </div>
-        {/* <Link>
-          <div
-            onClick={() =>{
-              setIsShowModalAdd(true);
-            }}
-            className="fixed bottom-0 right-0 mb-4 mr-4"
-          >
-            <div className="w-20 h-20 hover:bg-white">
-              <img
-                src="https://res.cloudinary.com/dbmiqiqf4/image/upload/v1701213122/tdesign_grid-add_wvxsuk.png"
-                alt="Add Data"
-                className="w-full h-full object-cover"
-              />
-              <ModalInputData isOpen={IsShowModalAdd} />
-            </div>
-          </div>
-        </Link> */}
+        <div className="flex mt-[30px] text-white">.</div>
       </div>
     </div>
   );

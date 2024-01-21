@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import ImageComponent from "../component/Imagecomponent";
 
 const CardsTour = ({payloads}) => {
   const {
@@ -17,13 +18,11 @@ const CardsTour = ({payloads}) => {
   return (
     <div className="w-full sm:w-[263px] rounded overflow-hidden shadow-lg rounded-[10px]">
       <NavLink to={`/content/${id}`}>
-      <img
-        className="w-full"
-        src="https://res.cloudinary.com/dbmiqiqf4/image/upload/v1700743741/unsplash_VowIFDxogG4_liyxvu.png"
-        alt="Sunset in the mountains"
-      />
+      <div className="w-full" alt="Image">
+          {gambarUtama && <ImageComponent imageName={gambarUtama} />}
+        </div>
       <div className="px-6 py-4">
-        <div className="font-bold text-[16px] mb-2">{name}</div>
+        <div className="font-bold text-center text-[16px] mb-2 sm:text-base text-[10px]">{name}</div>
       </div>
       </NavLink>
     </div>

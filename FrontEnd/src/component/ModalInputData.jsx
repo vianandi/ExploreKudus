@@ -77,6 +77,7 @@ const ModalInputData = ({ isOpen, onClose }) => {
       setSelectedFacilities([]);
       console.log("Data add successfull");
       reset();
+      onClose();
     } catch (error) {
       console.error("Error add data: ", error);
     }
@@ -207,42 +208,6 @@ const ModalInputData = ({ isOpen, onClose }) => {
                           {facilities && facilities.map(({name, id}) => (
                             <option key={id} value={name}>{name}</option>
                           ))}
-                          {/* <option value="Aksesibilitas Difabel">
-                            Aksesibilitas Difabel
-                          </option>
-                          <option value="Camping Ground">Camping Ground</option>
-                          <option value="Food court">Food court</option>
-                          <option value="Kafe">Kafe</option>
-                          <option value="Kantor informasi wisata">
-                            Kantor informasi wisata
-                          </option>
-                          <option value="Klinik">Klinik</option>
-                          <option value="Kolam renang">Kolam renang</option>
-                          <option value="Musholla">Musholla</option>
-                          <option value="Penginapan">Penginapan</option>
-                          <option value="Penyewaan Sepeda">
-                            Penyewaan Sepeda
-                          </option>
-                          <option value="Peta dan brosur informatif">
-                            Peta dan brosur informatif
-                          </option>
-                          <option value="Pos Keamanan Wisata">
-                            Pos Keamanan Wisata
-                          </option>
-                          <option value="Pos Pemadam Kebakaran">
-                            Pos Pemadam Kebakaran
-                          </option>
-                          <option value="Ruang konferensi">
-                            Ruang konferensi
-                          </option>
-                          <option value="Taman bermain anak">
-                            Taman bermain anak
-                          </option>
-                          <option value="Taman rekreasi">Taman rekreasi</option>
-                          <option value="Toilet dan Fasilitas Difabel">
-                            Toilet dan Fasilitas Difabel
-                          </option>
-                          <option value="Wifi">Wifi</option>  */}
                         </select>
                       </div>
                       <ul className="mb-2">
@@ -277,21 +242,7 @@ const ModalInputData = ({ isOpen, onClose }) => {
                             <option key={id} value={id}>{name}</option>
                           ))}
                         </select>
-                      </div>
-                      {/* {formData.kategori === "Wisata Prioritas" && (
-                        <div className="mb-4">
-                          <label className="block text-sm font-medium text-gray-700">
-                            Hashtag
-                          </label>
-                          <input
-                            type="text"
-                            name="hashtag"
-                            // value={formData.hashtag}
-                            // onChange={handleInputChange}
-                            className="mt-1 p-2 border rounded-md w-full"
-                          />
-                        </div>
-                      )} */}
+                      </div>                  
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700">
                           Gambar Utama
@@ -316,18 +267,7 @@ const ModalInputData = ({ isOpen, onClose }) => {
                           // onChange={(e) => handleFileChange(e, "gambarPanjang")}
                           className="mt-1 p-2 border rounded-md w-full"
                         />
-                      </div>
-                      {/* <div className="mb-4">
-                      <label className="block text-sm font-medium text-gray-700">
-                        Gambar Kecil
-                      </label>
-                      <input
-                        type="file"
-                        name="gambarKecil"
-                        onChange={(e) => handleFileChange(e, "gambarKecil")}
-                        className="mt-1 p-2 border rounded-md w-full"
-                      />
-                    </div> */}
+                      </div>            
                     </div>
                   </div>
                 </div>

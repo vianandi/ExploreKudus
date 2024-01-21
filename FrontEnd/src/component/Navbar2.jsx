@@ -3,8 +3,17 @@ import { Link } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
 import MenuIcon from "../assets/menu2.png";
 import CloseIcon from "../assets/x.png";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    navigate(`/tourism?search=${searchTerm}`);
+  };
+
   const menuItem = [
     {
       text: "Home",
@@ -39,9 +48,7 @@ const Navbar = () => {
   };
 
   return (
-    
     <nav className="fixed bg-white p-4 sm:px-[80px] w-screen">
-      
       <div className="flex items-center justify-between">
         <Link to="/">
           <img
@@ -69,26 +76,24 @@ const Navbar = () => {
           </Link>
 
           {/* Input Search */}
-          <div className="relative flex border border-[#5D5A88] w-[400px] h-[40px] rounded-[20px]">
+          <form
+            onSubmit={handleSearch}
+            className="relative flex border border-[#5D5A88] w-[400px] h-[40px] rounded-[20px]"
+          >
             <input
               type="text"
               placeholder="Cari disini"
               className="py-1 px-2 rounded-[20px] flex-grow"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <button className="text-[#5D5A88] rounded-[20px] mr-5 ml-2">
+            <button
+              type="submit"
+              className="text-[#5D5A88] rounded-[20px] mr-5 ml-2"
+            >
               Cari
             </button>
-          </div>
-
-          {/* Tombol Admin Login */}
-          {/* <Link to="/adminlogin2">
-            <Button
-              variant="filled"
-              className="rounded-full w-[143px] h-[45px] bg-[#004aad] mr-5"
-            >
-              Admin Login
-            </Button>
-          </Link> */}
+          </form>          
         </div>
 
         {/* Toggle Menu Button */}
@@ -115,12 +120,12 @@ const Navbar = () => {
               </Link>
             ))}
             {/* Tambahan tombol login admin pada tampilan mobile */}
-            <Link
+            {/* <Link
               to="/adminlogin2"
               className="block py-2 text-[#004AAD] hover:text-red-300"
             >
               Admin Login
-            </Link>
+            </Link> */}
           </div>
         )}
       </div>

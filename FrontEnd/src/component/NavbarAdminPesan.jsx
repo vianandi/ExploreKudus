@@ -32,10 +32,6 @@ const NavbarAdminPesan = () => {
                 Wisata
               </Button>
             </Link>
-            {/* Dropdown */}
-            <div className="mr-5">
-              <Dropdown />
-            </div>
             {/* Input Search */}
             <div className="flex border border-[#5D5A88] w-[400px] h-[40px] rounded-[20px] ">
               <input

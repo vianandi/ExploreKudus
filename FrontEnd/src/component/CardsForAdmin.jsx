@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import ImageComponent from "../component/Imagecomponent";
 import ButtonRed from "./ButtonRed";
 import ButtonBLue from "./ButtonBlue";
+import ImageComponentadmin from "./Imagecomponentadmin";
 
 const CardsAdmin = ({ payloads, deletetourism, tourismId }) => {
   const {
@@ -58,14 +59,14 @@ const CardsAdmin = ({ payloads, deletetourism, tourismId }) => {
     <>
       <div>
         {/* Link menggunakan "#" agar tidak mengarahkan ke halaman baru */}
-        <div className="flex flex-col max-w-[348px] space-y-4 mt-5">
+        <div className="flex flex-col max-w-[348px] space-y-4 sm:h-[300px] sm:w-[340px] ">
           {/* Card */}
           <div className="max-w-[348px] p-4 rounded-[25px] border border-[#D4D2E3]">
             <div
               alt="Card"
-              className="w-full max-w-[304px] max-h-[160px] h-auto rounded-lg"
+              className="flex justify-center w-full max-w-[304px] max-h-[160px] h-auto rounded-lg"
             >
-              {gambarUtama && <ImageComponent imageName={gambarUtama} />}
+              {gambarUtama && <ImageComponentadmin imageName={gambarUtama} />}
             </div>
             <p className="mt-4 text-[#004AAD] font-semibold text-center">
               {name}

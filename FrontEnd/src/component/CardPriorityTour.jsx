@@ -2,6 +2,7 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import ImageComponent from "../component/Imagecomponent";
 import axios from "axios";
+import ImageComponentPriority from "./Imagecomponentpriority";
 
 const CardPriorityTour = ({ payloads }) => {
   const {
@@ -29,7 +30,7 @@ const CardPriorityTour = ({ payloads }) => {
     <div className="max-w-sm rounded overflow-hidden shadow-lg rounded-[20px]">
       <NavLink to={`/content/${id}`}>
         <div className="w-full rounded-[10px]" alt="Sunset in the mountains">
-          {gambarUtama && <ImageComponent imageName={gambarUtama} />}
+          {gambarUtama && <ImageComponentPriority imageName={gambarUtama} />}
         </div>
         <div className="px-2 py-4">
           <div className="font-bold text-[14px]  text-center mb-2 sm:text-lg">

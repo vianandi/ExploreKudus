@@ -97,7 +97,7 @@ const CommentSection = ({ tourismId }) => {
           <label htmlFor="comment">Komentar:</label>
           <textarea
             {...register("comment", { required: true })}
-            className="w-[540px] py-2 px-2.5 border-[1px] border-slate-400 rounded-md"
+            className="sm:w-[540px] w-full py-2 px-2.5 border-[1px] border-slate-400 rounded-md"
             id="comment"
             name="comment"
           />

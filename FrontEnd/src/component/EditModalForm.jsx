@@ -16,8 +16,6 @@ const EditModalForm = ({ isOpen, onClose, tourismId }) => {
   // crossdomain: true,
   // });
 
-
-
   const {
     register,
     handleSubmit,
@@ -42,7 +40,6 @@ const EditModalForm = ({ isOpen, onClose, tourismId }) => {
     getCategory();
     // console.log(selectedFacilities);
   }, []);
-
 
   // useEffect(() => {
   //   getTourisms();
@@ -141,7 +138,7 @@ const EditModalForm = ({ isOpen, onClose, tourismId }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-  
+
     const formData = new FormData();
     formData.append("name", dataStore?.name);
     formData.append("alamat", dataStore?.alamat);
@@ -152,14 +149,18 @@ const EditModalForm = ({ isOpen, onClose, tourismId }) => {
     formData.append("gambarUtama", dataStore?.gambarUtama);
     formData.append("gambarPanjang", dataStore?.gambarPanjang);
     formData.append("fasilitas", selectedFacilities.join(","));
-  
+
     try {
-      await axios.post("http://localhost:8080/api/tourism", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-  
+      await axios.post(
+        `http://localhost:8080/api/tourism/${tourismId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       setSelectedFacilities([]);
       console.log("Data add successfull");
       reset();
@@ -169,7 +170,6 @@ const EditModalForm = ({ isOpen, onClose, tourismId }) => {
     }
   };
 
-  
   // await axios.put(
   //   `http://localhost:8080/api/tourism/${tourismId}`,formData,
   //   formData,

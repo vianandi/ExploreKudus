@@ -7,13 +7,14 @@ import axios from "axios";
 import ImageComponent from "../component/Imagecomponent";
 // import { set } from "react-hook-form";
 import moment from "moment/moment";
+import ImageComponentcontent from "../component/Imagecomponentcontent";
 
 const Content = () => {
   const { id } = useParams();
   const [tourism, setTourism] = useState(null);
   const [tourisms, setTourisms] = useState([]);
   const [comment, setComment] = useState([]);
-  const [filteredComments, setFilteredComments] = useState([]);
+  // const [filteredComments, setFilteredComments] = useState([]);
   const formatDate = moment(tourism?.created_at).format("DD MMMM YYYY");
   const [currentCategoryId, setCurrentCategoryId] = useState(null);
   const [displayedCardId, setDisplayedCardId] = useState(null);
@@ -44,11 +45,11 @@ const Content = () => {
 
   useEffect(() => {
     if (tourism !== null) {
-      const dataComment = comment.filter((com) => com.tourismId == tourism.id);
-      console.log(dataComment);
-      setFilteredComments(dataComment);
+      // const dataComment = comment.filter((com) => com.tourismId == tourism.id);
+      // console.log(dataComment);
+      // setFilteredComments(dataComment);
     } else {
-      setFilteredComments([]);
+      // setFilteredComments([]);
     }
   }, [comment, tourism]);
 
@@ -76,11 +77,25 @@ const Content = () => {
     }
   };
 
+  // const filteredComments = async () => {
+  //   if (comment !== null) {
+  //     console.log('COMMENTS', comment);
+  //     const dataComment = comment.filter(
+  //       (com) => com.id_pariwisata == id
+  //     );
+  //     console.log('COMMENTS', dataComment);
+  //     setComment(dataComment);
+  //   } else {
+  //     setComment(comment);
+  //   }
+  // };
+
   const getComment = async () => {
     try {
       const response = await axios.get(`http://localhost:8080/api/comment`);
-      setComment(response.data);
-      console.log(response.data);
+      setComment(response.data.filter((item) => item.id_pariwisata == id));
+      // filteredComments()
+      console.log(comment);
     } catch (error) {
       console.error("Error fetching comment data:", error);
     }
@@ -110,31 +125,19 @@ const Content = () => {
     return array;
   }
 
-  // const filteredComments = async () => {
-  //   if (selectedComment !== null) {
-  //     const dataComment = comment.filter(
-  //       (com) => com.tourismId == selectedComment
-  //     );
-  //     console.log(dataComment);
-  //     setSelectedComment(dataComment);
-  //   } else {
-  //     setSelectedComment(comment);
-  //   }
-  // };
-
   return (
     <>
       {/* Title */}
       <div className="flex flex-col items-start sm:px-[120px] sm:pt-32 pt-32">
         <div className="flex mt-16">
-          <div className="  mr-4 text-[20px] text-[#004AAD] md:text-[42px] font-semibold">
+          <div className="mr-4  text-[20px] text-[#004AAD] md:text-[42px] font-semibold">
             {tourism?.name}
           </div>
         </div>
         {/* Border */}
         <div className="flex justify-center">
           <div className="text-center">
-            <div className="border-t border-[#004AAD] w-[1220px] mx-auto my-4"></div>
+            <div className="border-t border-[#004AAD] xs:w-[350px] sm:w-[1220px] mx-auto my-4"></div>
           </div>
         </div>
       </div>
@@ -149,24 +152,24 @@ const Content = () => {
       {/* Content */}
       <div className="flex sm:px-[120px]">
         {/* Left Col */}
-        <div className="max-w-[788px] sm:pr-[12px] mt-4">
+        <div className="max-w-full sm:max-w-[788px] sm:pr-[12px] mt-4">
           {/* Content 1st Col */}
-          <p className=" text-justify mb-8">{tourism?.deskripsi1}</p>
-          <div className="w-[788px] flex items-center justify-center">
+          <p className="text-justify mb-8">{tourism?.deskripsi1}</p>
+          <div className="w-full sm:w-[788px] flex items-center justify-center">
             {tourism?.gambarUtama && (
-              <ImageComponent imageName={tourism?.gambarUtama} />
+              <ImageComponentcontent imageName={tourism?.gambarUtama} />
             )}
           </div>
-          <div className=" ">
+          <div>
             <p className="text-justify my-8">{tourism?.deskripsi2}</p>
           </div>
           {/* Pict Row */}
-          <div className="flex max-w-[788px]">
-            <div className="max-w-[788px] sm:pr-[8px]  ">
-              <div className="w-[770px] flex-1 ">
+          <div className="flex max-w-full sm:max-w-[788px]">
+            <div className="max-w-full sm:max-w-[788px] sm:pr-[8px]">
+              <div className="w-full sm:w-[788px] flex-1">
                 <div className="flex items-center justify-center">
                   {tourism?.gambarPanjang && (
-                    <ImageComponent imageName={tourism?.gambarPanjang} />
+                    <ImageComponentcontent imageName={tourism?.gambarPanjang} />
                   )}
                 </div>
               </div>
@@ -193,7 +196,7 @@ const Content = () => {
             </div>
           </div>
 
-          <div className="mt-5 w-[348px]">
+          <div className="mt-5 max-w-full sm:max-w-[348px]">
             {shuffle([...tourisms]) // Shuffle the array
               .filter((tour) => tour.id !== displayedCardId)
               .slice(0, 3)
@@ -206,18 +209,14 @@ const Content = () => {
         </div>
       </div>
       {/* Comment Section */}
-      <div className="flex sm:px-[120px]">
-        <div className="w-1/2 p-4">
+      <div className="flex flex-col sm:flex-row sm:px-[120px]">
+        <div className="w-full sm:w-1/2 p-4">
           <CommentSection tourismId={{ id }} />
         </div>
-        <div className="max-h-[350px] w-1/2 p-4 overflow-y-auto">
+        <div className="max-h-[350px] w-full sm:w-1/2 p-4 overflow-y-auto">
           <div>
             <p className="text-2xl">Komentar</p>
           </div>
-          {/* {filteredComments?.map(
-            (comment) =>
-              comment && <LogComment payloads={comment} key={comment.id} />
-          )} */}
           {/* {filteredComments?.map(
             (comment) =>
               comment && <LogComment payloads={comment} key={comment.id} />

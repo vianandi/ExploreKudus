@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import ImageComponent from "../component/Imagecomponent";
+import ImageComponentleft from "./Imagecomponentleft";
 
 const LeftCards = ({ payloads }) => {
   const {
@@ -21,9 +22,9 @@ const LeftCards = ({ payloads }) => {
         <div className="max-w-[348px] p-4 rounded-[25px] border border-[#D4D2E3]">
           <div
             alt="Card"
-            className="w-full max-w-[304px] max-h-[160px] h-auto rounded-lg"
+            className="w-full max-w-[304px] sm:max-h-[100%] rounded-lg"
           >
-            {gambarUtama && <ImageComponent imageName={gambarUtama} />}
+            {gambarUtama && <ImageComponentleft imageName={gambarUtama} />}
           </div>
           <p className="mt-4 text-[#004AAD] font-semibold text-center">
             {name}

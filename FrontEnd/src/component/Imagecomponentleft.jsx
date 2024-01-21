@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const ImageComponent = ({ imageName, height, width }) => {
+const ImageComponentleft = ({ imageName, height, width }) => {
   const [imageUrl, setImageUrl] = useState('');
 
   useEffect(() => {
@@ -19,9 +19,9 @@ const ImageComponent = ({ imageName, height, width }) => {
 
   return (
     <div >
-      {imageUrl && <img height={height} width={width} src={imageUrl} alt="Gambar" />}
+      {imageUrl && <img className='h-[150px] w-full'  src={imageUrl} alt="Gambar" />}
     </div>
   );
 };
 
-export default ImageComponent;
+export default ImageComponentleft;

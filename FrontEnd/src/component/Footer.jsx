@@ -60,7 +60,7 @@ const Footer = () => {
         </div>
         <div className="flex justify-center">
           <div className="text-center">
-            <div className="border-t border-[#004AAD] w-[1220px] mx-auto my-4"></div>
+            <div className="border-t border-[#004AAD] xs:w-[350px] sm:w-[1220px] mx-auto my-4"></div>
           </div>
         </div>
 

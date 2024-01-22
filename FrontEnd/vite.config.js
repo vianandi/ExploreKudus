@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'explorekudus.com/backend',
+        target: 'https://explorekudus.com/backend',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }

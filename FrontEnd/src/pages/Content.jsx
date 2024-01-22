@@ -33,7 +33,7 @@ const Content = () => {
   useEffect(() => {
     const fetchTourisms = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/tourism");
+        const response = await axios.get("/api/api/tourism");
         setTourisms(response.data);
       } catch (error) {
         console.error("Error fetching tourisms:", error);
@@ -60,7 +60,7 @@ const Content = () => {
   const getTourisms = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/tourism/${id}`
+        `/api/api/tourism/${id}`
       );
       const data = response.data;
       // If facilities is a string of facilities separated by commas, split it into an array
@@ -92,7 +92,7 @@ const Content = () => {
 
   const getComment = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/comment`);
+      const response = await axios.get(`/api/api/comment`);
       setComment(response.data.filter((item) => item.id_pariwisata == id));
       // filteredComments()
       console.log(comment);

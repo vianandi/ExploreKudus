@@ -22,7 +22,7 @@ const TourData = () => {
 
   const getTourisms = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/tourism");
+      const response = await axios.get("/api/api/tourism");
       setTourisms(response.data);
       setDataTourisms(response.data);
     } catch (error) {
@@ -33,7 +33,7 @@ const TourData = () => {
   const deletetourism = async (tourismId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:8080/api/tourism/${tourismId}`
+        `/api/api/tourism/${tourismId}`
       );
 
       console.log(response.data);

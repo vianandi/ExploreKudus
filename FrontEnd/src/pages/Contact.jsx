@@ -20,7 +20,7 @@ const Contact = () => {
 
       console.log(data);
 
-      await axios.post("http://localhost:8080/api/contact", formData, {
+      await axios.post("/api/api/contact", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

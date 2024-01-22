@@ -46,7 +46,7 @@ const CommentModalForm = ({ payloads, isOpen, onClose }) => {
 
       console.log(data);
 
-      await axios.post("http://localhost:8080/api/comment", formData, {
+      await axios.post("/api/api/comment", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -61,7 +61,7 @@ const CommentModalForm = ({ payloads, isOpen, onClose }) => {
 
   const getComment = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/comment`);
+      const response = await axios.get(`/api/api/comment`);
       setComment(response.data);
       // console.log(response.data);
     } catch (error) {

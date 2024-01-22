@@ -13,7 +13,7 @@ const Admin_pesan = () => {
 
   const getMessage = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/contact");
+      const response = await axios.get("/api/api/contact");
       setMessage(response.data);
     } catch (error) {
       console.error("Error fetching attractions:", error);
@@ -23,7 +23,7 @@ const Admin_pesan = () => {
   const deletepesan = async (pesanId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:8080/api/contact/${pesanId}`
+        `/api/api/contact/${pesanId}`
       );
 
       console.log(response.data);

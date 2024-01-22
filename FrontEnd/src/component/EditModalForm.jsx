@@ -47,7 +47,7 @@ const EditModalForm = ({ isOpen, onClose, tourismId }) => {
 
   const getFasilitas = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/fasilitas");
+      const response = await axios.get("/api/api/fasilitas");
       setFacilities(response.data);
       // console.log(response.data);
     } catch (error) {
@@ -57,7 +57,7 @@ const EditModalForm = ({ isOpen, onClose, tourismId }) => {
 
   const getCategory = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/category");
+      const response = await axios.get("/api/api/category");
       setCategory(response.data);
       // console.log(response.data);
     } catch (error) {
@@ -86,7 +86,7 @@ const EditModalForm = ({ isOpen, onClose, tourismId }) => {
     if (tourismId) {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/tourism/${tourismId}`
+          `/api/api/tourism/${tourismId}`
         );
         setTourism(response.data);
         console.log(response.data);
@@ -152,7 +152,7 @@ const EditModalForm = ({ isOpen, onClose, tourismId }) => {
 
     try {
       await axios.post(
-        `http://localhost:8080/api/tourism/${tourismId}`,
+        `/api/api/tourism/${tourismId}`,
         formData,
         {
           headers: {

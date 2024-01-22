@@ -34,7 +34,7 @@ const ModalInputData = ({ isOpen, onClose }) => {
 
   const getFasilitas = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/fasilitas");
+      const response = await axios.get("/api/api/fasilitas");
       setFacilities(response.data);
       // console.log(response.data);
     } catch (error) {
@@ -44,7 +44,7 @@ const ModalInputData = ({ isOpen, onClose }) => {
 
   const getCategory = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/category");
+      const response = await axios.get("/api/api/category");
       setCategory(response.data);
       // console.log(response.data);
     } catch (error) {
@@ -69,7 +69,7 @@ const ModalInputData = ({ isOpen, onClose }) => {
       console.log(data);
       console.log(data.category);
 
-      await axios.post("http://localhost:8080/api/tourism", formData, {
+      await axios.post("/api/api/tourism", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

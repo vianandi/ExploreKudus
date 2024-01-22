@@ -25,7 +25,7 @@ const CommentSection = ({ tourismId }) => {
 
       console.log(data);
 
-      await axios.post("http://localhost:8080/api/comment", formData, {
+      await axios.post("/api/api/comment", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

@@ -10,7 +10,7 @@ const ImageComponentPriority = ({ imageName, height, width }) => {
           `/api/api/get-image-url/${imageName}`
         );
         const data = await response.json();
-        setImageUrl(data.imageUrl.replace(/https?:\/\/localhost:\d+/g, 'https://explorekudus.com'));
+        setImageUrl(data.imageUrl.replace(/https?:\/\/localhost:\d+/g, 'https://explorekudus.com/api'));
       } catch (error) {
         console.error("Error fetching image URL:", error);
       }

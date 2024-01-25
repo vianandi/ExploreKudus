@@ -59,19 +59,19 @@ const Navbar = () => {
         </Link>
         {/* Menu */}
         <div className="hidden lg:flex items-center justify-between space-x-8">
-          <Link to="/" className="text-[#5D5A88] hover:text-gray-300">
+          <Link to="/" className="text-[#5D5A88] hover:text-blue-500">
             Home
           </Link>
-          <Link to="/maps" className="text-[#5D5A88] hover:text-gray-300">
+          <Link to="/maps" className="text-[#5D5A88] hover:text-blue-500">
             Maps
           </Link>
-          <Link to="/tourism" className="text-[#5D5A88] hover:text-gray-300">
+          <Link to="/tourism" className="text-[#5D5A88] hover:text-blue-500">
             Tourism
           </Link>
-          <Link to="/about" className="text-[#5D5A88] hover:text-gray-300">
+          <Link to="/about" className="text-[#5D5A88] hover:text-blue-500">
             About
           </Link>
-          <Link to="/contact" className="text-[#5D5A88] hover:text-gray-300">
+          <Link to="/contact" className="text-[#5D5A88] hover:text-blue-500">
             Contact
           </Link>
 
@@ -93,7 +93,7 @@ const Navbar = () => {
             >
               Cari
             </button>
-          </form>          
+          </form>
         </div>
 
         {/* Toggle Menu Button */}
@@ -113,7 +113,7 @@ const Navbar = () => {
               <Link
                 to={item.path}
                 key={item.text}
-                className="block py-2 text-[#5D5A88] hover:text-gray-300"
+                className="block py-2 text-[#5D5A88] hover:text-blue-500"
                 onClick={handleMenuItemClick}
               >
                 {item.text}

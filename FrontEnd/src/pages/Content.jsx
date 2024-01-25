@@ -152,7 +152,7 @@ const Content = () => {
       {/* Content */}
       <div className="flex sm:px-[120px]">
         {/* Left Col */}
-        <div className="max-w-full sm:max-w-[788px] sm:pr-[12px] mt-4">
+        <div className="w-[330px] sm:w-[758px] sm:pr-[12px] mt-4 ml-1">
           {/* Content 1st Col */}
           <p className="text-justify mb-8">{tourism?.deskripsi1}</p>
           <div className="w-full sm:w-[788px] flex items-center justify-center">
@@ -179,10 +179,10 @@ const Content = () => {
         </div>
 
         {/* Right Col */}
-        <div className="max-w-[348px] ml-12 sm:pl-[12px] mt-4">
+        <div className="max-w-[348px] ml-5 sm:pl-[12px] mt-4">
           {/* Content 2nd Col */}
           <h3 className="font-bold text-[#004AAD]">Fasilitas</h3>
-          <div className="flex gap-8 mt-5">
+          <div className="flex gap-8 mt-5 h-[150px] overflow-y-auto">
             <div
               style={{
                 display: "grid",
@@ -196,7 +196,7 @@ const Content = () => {
             </div>
           </div>
 
-          <div className="mt-5 max-w-full sm:max-w-[348px]">
+          <div className="mt-5 max-w-full sm:max-w-[348px] rounded rounded-[10px]">
             {shuffle([...tourisms]) // Shuffle the array
               .filter((tour) => tour.id !== displayedCardId)
               .slice(0, 3)

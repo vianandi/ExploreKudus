@@ -341,7 +341,7 @@ const EditModalForm = ({ isOpen, onClose, tourismId }) => {
                           ))}
                       </select>
                     </div>
-                    <ul className="mb-2">
+                    <ul className="mb-2 overflow-y-auto max-h-[200px]">
                       {selectedFacilities &&
                         selectedFacilities.map((facility, index) => (
                           <li

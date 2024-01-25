@@ -34,9 +34,9 @@ const Contact = () => {
   };
 
   return (
-    <div className="container mx-auto  mt-8 flex justify-center sm:pt-32 pt-32">
+    <div className="container mx-auto flex justify-center sm:pt-32 pt-32">
       <form
-        className="flex flex-col w-[1214px] md:flex-row"
+        className="flex flex-col w-[1100px] md:flex-row mt-2"
         onSubmit={handleSubmit(onSubmit)}
       >
         {/* Kolom Pertama */}

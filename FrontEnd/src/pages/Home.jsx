@@ -16,7 +16,7 @@ const Home = () => {
   const [filteredComments, setFilteredComments] = useState([]);
   const shuffledTourism = shuffle([...tourism])
     .filter((tour) => tour.category_id === "4")
-    .slice(0, 3);
+    .slice(0, 4);
 
   useEffect(() => {
     getTourisms();
@@ -73,9 +73,10 @@ const Home = () => {
         </div>
       </div>
       {/* Cards Priority Tour */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 w-full px-5 sm:px-[120px] sm:pt-10 sm:pb-10">
-        {tourism
+      <div className="flex flex-wrap sm:flex gap-4 w-full px-5 sm:px-[90px] sm:pt-10 sm:pb-10">
+        {shuffle([...tourism])
           .filter((tour) => tour.category_id === "1")
+          .slice(0, 6)
           .map((tourism) => (
             <CardPriorityTour
               key={tourism.id}
@@ -95,23 +96,11 @@ const Home = () => {
         </div>
       </div>
       {/* Cards Culinary Tour */}
-      <div className="flex flex-col sm:flex-row w-full px-5 sm:px-[120px] rounded-[20px] h-auto sm:h-[555px] mb-5">
+      <div className="flex gap-2 sm:flex-row px-5 rounded-[20px] w-full h-auto sm:px-[80px] sm:h-[555px] mb-5">
         {/* Kolom 1 */}
-        <div className="flex flex-col gap-4 pb-10 pt-10 sm:pt-0 sm:pb-5 w-full sm:w-1/2 rounded-[20px]">
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-4 pt-1 sm:pt-2 sm:pb-5 w-full rounded-[20px]">
           {shuffledTourism
             .slice(0, Math.ceil(shuffledTourism.length / 2)) // take the first half of the array
-            .map((tourism) => (
-              <CardCulinaryLong
-                key={tourism.id}
-                payloads={tourism}
-              ></CardCulinaryLong>
-            ))}
-        </div>
-
-        {/* Kolom 2 */}
-        <div className="flex flex-col gap-4 pb-10 pt-10 sm:pt-0 sm:pb-5 w-full sm:w-1/2 rounded-[20px]">
-          {shuffledTourism
-            .slice(Math.ceil(shuffledTourism.length / 3)) // take the second half of the array
             .map((tourism) => (
               <CardCulinaryLong
                 key={tourism.id}
@@ -123,7 +112,7 @@ const Home = () => {
       {/* Culinary Button */}
       <div className="p-2 text-center">
         <CulinaryBtn
-          path="/"
+          path="/tourism"
           text="LIHAT LEBIH BANYAK"
           width={"w-full sm:w-1/3"}
         />
@@ -142,10 +131,10 @@ const Home = () => {
         </div>
       </div>
       {/* Cards Tour */}
-      <div className="container mx-auto mb-2 mt-8 sm:px-[120px] px-[5px]">
-        <div className="flex flex-wrap mx-4">
+      <div className="flex mx-auto mb-2 mt-8 sm:px-[50px] px-[5px]">
+        <div className="flex mx-4">
           {/* Baris Pertama */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 px-5 sm:px-[20px] sm:pt-10 sm:pb-10">
+          <div className="flex flex-wrap gap-4 px-5 sm:px-[20px] sm:pt-10 sm:pb-10">
             {shuffle([...tourism])
               .slice(0, 8)
               .map(
@@ -160,7 +149,7 @@ const Home = () => {
       {/* Culinary Button */}
       <div className="p-2 text-center mb-8">
         <CulinaryBtn
-          path="/"
+          path="/tourism"
           text="LIHAT LEBIH BANYAK"
           width={"w-full sm:w-1/3"}
         />

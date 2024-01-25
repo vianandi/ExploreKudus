@@ -19,7 +19,7 @@ const ImageComponentadmin = ({ imageName, height, width }) => {
 
   return (
     <div >
-      {imageUrl && <img className='sm:h-[160px] sm:w-[290px] rounded rounded-[10px] w-[100px] h-[60px]' src={imageUrl} alt="Gambar" />}
+      {imageUrl && <img className='sm:h-[160px] sm:w-[290px] rounded rounded-[10px] w-[230px] h-[95px]' src={imageUrl} alt="Gambar" />}
     </div>
   );
 };

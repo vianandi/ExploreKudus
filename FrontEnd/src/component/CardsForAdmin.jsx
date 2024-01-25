@@ -59,12 +59,12 @@ const CardsAdmin = ({ payloads, deletetourism, tourismId }) => {
     <>
       <div>
         {/* Link menggunakan "#" agar tidak mengarahkan ke halaman baru */}
-        <div className="flex flex-col max-w-[348px] space-y-4 sm:h-[300px] sm:w-[340px] ">
+        <div className="flex flex-col max-w-sm max-h-sm space-y-4">
           {/* Card */}
-          <div className="max-w-[348px] p-4 rounded-[25px] border border-[#D4D2E3]">
+          <div className="p-4 rounded-[10px] border border-[#D4D2E3] sm:h-[300px] sm:w-[330px] w-[250px] h-[225px]">
             <div
               alt="Card"
-              className="flex justify-center w-full max-w-[304px] max-h-[160px] h-auto rounded-lg"
+              className="flex justify-center max-w-[300px] max-h-[160px] rounded-lg"
             >
               {gambarUtama && <ImageComponentadmin imageName={gambarUtama} />}
             </div>

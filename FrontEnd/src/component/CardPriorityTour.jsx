@@ -27,13 +27,13 @@ const CardPriorityTour = ({ payloads }) => {
   const deskripsiPotong = potongDeskripsi(deskripsi1, 20);
 
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg rounded-[20px]">
+    <div className="max-w-sm sm:w-full w-[100px] rounded overflow-hidden shadow-lg rounded-[10px]">
       <NavLink to={`/content/${id}`}>
         <div className="w-full rounded-[10px]" alt="Sunset in the mountains">
           {gambarUtama && <ImageComponentPriority imageName={gambarUtama} />}
         </div>
         <div className="px-2 py-4">
-          <div className="font-bold text-[14px]  text-center mb-2 sm:text-lg">
+          <div className="font-bold text-[9px] sm:text-[20px] text-center sm:text-lg">
             {name}
           </div>
           <p

@@ -85,13 +85,12 @@ const ModalInputData = ({ isOpen, onClose }) => {
 
   const handleFacilityChange = (event) => {
     const selectedFacility = event.target.value;
-    
+
     setSelectedFacilities((prevFacilities) => [
       ...prevFacilities,
       selectedFacility,
     ]);
   };
-
 
   const handleDeleteFacility = (index) => {
     setSelectedFacilities((prevFacilities) => {
@@ -105,7 +104,7 @@ const ModalInputData = ({ isOpen, onClose }) => {
     isOpen && (
       <>
         <div className="justify-center items-center flex overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-          <div className="relative w-auto my-6 mx-auto max-w-[1440px]">
+          <div className="relative w-auto my-6 mx-auto max-w-[1200px] mt-[120px]">
             {/*content*/}
             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
               {/*header*/}
@@ -205,26 +204,30 @@ const ModalInputData = ({ isOpen, onClose }) => {
                           className="mt-1 p-2 border rounded-md w-full text-gray-500"
                         >
                           <option value="">Pilih Fasilitas</option>
-                          {facilities && facilities.map(({name, id}) => (
-                            <option key={id} value={name}>{name}</option>
-                          ))}
+                          {facilities &&
+                            facilities.map(({ name, id }) => (
+                              <option key={id} value={name}>
+                                {name}
+                              </option>
+                            ))}
                         </select>
                       </div>
-                      <ul className="mb-2">
-                        {selectedFacilities && selectedFacilities.map((facility, index) => (
-                          <li
-                            key={index}
-                            className="flex justify-between items-center mr-2"
-                          >
-                            {facility}
-                            <button
-                              className="text-[#CD0404]"
-                              onClick={() => handleDeleteFacility(index)}
+                      <ul className="mb-2 max-h-[200px] overflow-y-auto">
+                        {selectedFacilities &&
+                          selectedFacilities.map((facility, index) => (
+                            <li
+                              key={index}
+                              className="flex justify-between items-center mr-2"
                             >
-                              X
-                            </button>
-                          </li>
-                        ))}
+                              {facility}
+                              <button
+                                className="text-[#CD0404]"
+                                onClick={() => handleDeleteFacility(index)}
+                              >
+                                X
+                              </button>
+                            </li>
+                          ))}
                       </ul>
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700">
@@ -238,11 +241,14 @@ const ModalInputData = ({ isOpen, onClose }) => {
                           className="mt-1 p-2 border rounded-md w-full"
                         >
                           <option value="">Pilih Kategori</option>
-                          {category && category.map(({name, id}) => (
-                            <option key={id} value={id}>{name}</option>
-                          ))}
+                          {category &&
+                            category.map(({ name, id }) => (
+                              <option key={id} value={id}>
+                                {name}
+                              </option>
+                            ))}
                         </select>
-                      </div>                  
+                      </div>
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700">
                           Gambar Utama
@@ -267,7 +273,7 @@ const ModalInputData = ({ isOpen, onClose }) => {
                           // onChange={(e) => handleFileChange(e, "gambarPanjang")}
                           className="mt-1 p-2 border rounded-md w-full"
                         />
-                      </div>            
+                      </div>
                     </div>
                   </div>
                 </div>

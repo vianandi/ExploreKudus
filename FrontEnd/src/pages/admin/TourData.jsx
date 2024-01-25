@@ -32,9 +32,7 @@ const TourData = () => {
 
   const deletetourism = async (tourismId) => {
     try {
-      const response = await axios.delete(
-        `/api/api/tourism/${tourismId}`
-      );
+      const response = await axios.delete(`/api/api/tourism/${tourismId}`);
 
       console.log(response.data);
       window.location.reload();
@@ -91,58 +89,44 @@ const TourData = () => {
       <div className="flex h-screen flex-col">
         <div className="flex flex-col items-center mb-5">
           {/* Baris Pertama */}
-          <div className="flex mb-4 ">
-            <div className=" p-4 mr-4 text-[18px] text-[#004AAD] md:text-[36px] font-semibold">
+          <div className="flex">
+            <div className="p-4 mr-4 text-[18px] text-[#004AAD] md:text-[36px] font-semibold">
               KATEGORI
             </div>
           </div>
           {/* Baris Kedua */}
-          <div className="flex gap-2">
-            <div className="p-2">
+          <div className="flex flex-wrap gap-2 justify-center">
+            <div className="flex gap-5">
               <LightBlueBtn
                 // path="/tourism"
                 text="WISATA PRIORITAS"
-                width={"w-[400px] sm:w-1/3"}
                 action={() => handleCategoryClick(1)}
               />
-            </div>
-            <div className="p-2">
               <LightBlueBtn
                 // path="/tourism"
                 text="WISATA ALAM"
-                width={"w-[400px] sm:w-1/3"}
                 action={() => handleCategoryClick(2)}
               />
-            </div>
-            <div className="p-2 ">
               <LightBlueBtn
                 // path="/tourism"
                 text="WISATA BELANJA"
-                width={"w-full sm:w-1/3"}
                 action={() => handleCategoryClick(3)}
               />
             </div>
-            <div className="p-2">
+            <div className="flex gap-5">
               <LightBlueBtn
                 // path="/tourism"
                 text="WISATA KULINER"
-                width={"w-full sm:w-1/3"}
                 action={() => handleCategoryClick(4)}
               />
-            </div>
-            <div className=" p-2">
               <LightBlueBtn
                 // path="/tourism"
                 text="WISATA RELIGI"
-                width={"w-full sm:w-1/3"}
                 action={() => handleCategoryClick(5)}
               />
-            </div>
-            <div className=" p-2">
               <LightBlueBtn
                 // path="/tourism"
                 text="WISATA SEJARAH"
-                width={"w-full sm:w-1/3"}
                 action={() => handleCategoryClick(6)}
               />
             </div>
@@ -152,7 +136,7 @@ const TourData = () => {
         {/* <NavbarAdmin /> */}
         {/* Category */}
 
-        <div className="mx-3 flex flex-wrap gap-3 justify-center pb-[50px]">
+        <div className="mx-2 flex flex-wrap gap-3 justify-center pb-[50px]">
           {filteredData?.map(
             (tourism) =>
               tourism && (

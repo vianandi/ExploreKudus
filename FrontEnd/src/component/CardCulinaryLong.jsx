@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import ImageComponent from "../component/Imagecomponent";
 import axios from "axios";
@@ -41,11 +41,9 @@ const CardCulinaryLong = ({ payloads }) => {
 
   return (
     <NavLink to={`/content/${id}`}>
-      <div className="relative -z-10 max-w-[600px] max-h-[268px] w-full h-full lg:flex rounded overflow-hidden shadow-lg rounded-[20px]">
-        <div className="rounded rounded-[20px]">  
-          {gambarUtama && (
-            <ImageComponent imageName={gambarUtama} />
-          )}
+      <div className="relative -z-10 max-w-[600px] max-h-[268px] sm:w-full sm:h-full w-[170px] h-[95px] lg:flex rounded overflow-hidden shadow-lg rounded-[20px]">
+        <div className="rounded rounded-[20px]">
+          {gambarUtama && <ImageComponent imageName={gambarUtama} />}
         </div>
         {/* <img
           className="w-full h-full object-cover rounded-[20px] "
@@ -54,11 +52,11 @@ const CardCulinaryLong = ({ payloads }) => {
         /> */}
         <div className="absolute top-0 left-0 w-full h-full rounded-[20px] bg-black bg-opacity-50 text-white p-4 flex flex-col justify-between leading-normal">
           <div className="mb-8">
-            <div className="text-white font-bold text-xl mb-2">
+            <div className="text-white font-bold sm:text-xl text-[12px] mb-2">
               {name}
               {/* Can coffee make you a better developer? */}
             </div>
-            <p className="text-gray-300 text-base">
+            <p className="text-gray-300 sm:text-base text-[10px]">
               {deskripsiPotong}
               {/* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
               Voluptatibus quia, nulla! Maiores et perferendis eaque,

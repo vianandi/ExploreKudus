@@ -41,7 +41,7 @@ const CardCulinaryLong = ({ payloads }) => {
 
   return (
     <NavLink to={`/content/${id}`}>
-      <div className="relative -z-10 max-w-[600px] max-h-[268px] sm:w-full sm:h-full w-[170px] h-[95px] lg:flex rounded overflow-hidden shadow-lg rounded-[20px]">
+      <div className="relative -z-10 max-w-[600px] max-h-[268px] sm:w-[580px] sm:h-[260px] w-[170px] h-[95px] lg:flex rounded overflow-hidden shadow-lg rounded-[20px]">
         <div className="rounded rounded-[20px]">
           {gambarUtama && <ImageComponent imageName={gambarUtama} />}
         </div>

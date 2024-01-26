@@ -100,7 +100,7 @@ const Home = () => {
         {/* Kolom 1 */}
         <div className="flex flex-wrap justify-center gap-2 sm:gap-4 pt-1 sm:pt-2 sm:pb-5 w-full rounded-[20px]">
           {shuffledTourism
-            .slice(0, Math.ceil(shuffledTourism.length / 2)) // take the first half of the array
+            // .slice(0, Math.ceil(shuffledTourism.length / 2)) // take the first half of the array
             .map((tourism) => (
               <CardCulinaryLong
                 key={tourism.id}

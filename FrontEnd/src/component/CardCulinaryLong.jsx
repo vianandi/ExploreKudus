@@ -37,7 +37,7 @@ const CardCulinaryLong = ({ payloads }) => {
     return `${deskripsiPotong}...`;
   };
 
-  const deskripsiPotong = potongDeskripsi(deskripsi1, 20);
+  const deskripsiPotong = potongDeskripsi(deskripsi1, 10);
 
   return (
     <NavLink to={`/content/${id}`}>
